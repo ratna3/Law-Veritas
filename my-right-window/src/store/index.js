@@ -121,6 +121,11 @@ export const useBlogStore = create((set, get) => ({
   },
 
   subscribeToBlogs: () => {
+    // Only subscribe if Supabase is properly configured
+    if (!isSupabaseConfigured()) {
+      return null;
+    }
+
     const channel = supabase
       .channel('blogs-changes')
       .on(

@@ -2,7 +2,7 @@ const About = () => {
   return (
     <div className="min-h-screen bg-deep-black text-white">
       <div className="max-w-4xl mx-auto px-4 py-16">
-        <h1 className="text-4xl md:text-5xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-neon-green to-neon-cyan">
+        <h1 className="text-4xl md:text-5xl font-bold mb-8 text-transparent bg-clip-text bg-linear-to-r from-neon-green to-neon-cyan">
           About My Right Window
         </h1>
         
@@ -40,7 +40,7 @@ const About = () => {
             <li><strong className="text-neon-green">Supabase</strong> - Backend and database</li>
           </ul>
 
-          <div className="mt-12 p-6 bg-gradient-to-r from-neon-green/10 to-neon-cyan/10 rounded-lg border border-neon-green/30">
+          <div className="mt-12 p-6 bg-linear-to-r from-neon-green/10 to-neon-cyan/10 rounded-lg border border-neon-green/30">
             <p className="text-gray-300">
               Join us on this journey through the digital landscape, where every post is a window to new perspectives 
               and possibilities.
