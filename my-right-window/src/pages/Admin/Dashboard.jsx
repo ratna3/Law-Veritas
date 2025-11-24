@@ -125,16 +125,26 @@ export default function AdminDashboard() {
 
       // Update password if provided
       if (newPassword) {
-        if (newPassword !== confirmPassword) {
+        // Trim whitespace from both passwords before comparing
+        const trimmedNewPassword = newPassword.trim();
+        const trimmedConfirmPassword = confirmPassword.trim();
+        
+        console.log('Password comparison:', {
+          newPasswordLength: trimmedNewPassword.length,
+          confirmPasswordLength: trimmedConfirmPassword.length,
+          areEqual: trimmedNewPassword === trimmedConfirmPassword
+        });
+        
+        if (trimmedNewPassword !== trimmedConfirmPassword) {
           throw new Error('Passwords do not match');
         }
         
-        if (newPassword.length < 8) {
+        if (trimmedNewPassword.length < 8) {
           throw new Error('Password must be at least 8 characters');
         }
 
         const { error: passwordError } = await supabase.auth.updateUser({
-          password: newPassword
+          password: trimmedNewPassword
         });
 
         if (passwordError) throw passwordError;
@@ -146,6 +156,7 @@ export default function AdminDashboard() {
       setSettingsMessage('Settings updated successfully!');
       setTimeout(() => setSettingsMessage(''), 3000);
     } catch (error) {
+      console.error('Settings update error:', error);
       setSettingsMessage('Error: ' + error.message);
     } finally {
       setLoading(false);
@@ -239,6 +250,7 @@ export default function AdminDashboard() {
                     type="password"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
+                    autoComplete="new-password"
                     className="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-neon-green transition-colors"
                     placeholder="••••••••"
                   />
@@ -252,6 +264,7 @@ export default function AdminDashboard() {
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
+                    autoComplete="new-password"
                     className="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-neon-green transition-colors"
                     placeholder="••••••••"
                   />
