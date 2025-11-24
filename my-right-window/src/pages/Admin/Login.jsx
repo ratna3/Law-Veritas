@@ -17,30 +17,65 @@ export default function Login() {
     setError('');
 
     try {
-      const { data, error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      console.log('🔐 Starting login process...');
+      
+      // Sign in with timeout
+      const { data, error: signInError } = await Promise.race([
+        supabase.auth.signInWithPassword({
+          email: email.trim(),
+          password: password,
+        }),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Login timeout - please try again')), 15000)
+        )
+      ]);
 
-      if (signInError) throw signInError;
+      console.log('✅ Sign in response:', { hasData: !!data, error: signInError });
 
-      // Check if user has admin role
-      const { data: profile } = await supabase
-        .from('user_profiles')
-        .select('role')
-        .eq('id', data.user.id)
-        .single();
+      if (signInError) {
+        console.error('❌ Sign in error:', signInError);
+        throw signInError;
+      }
+
+      if (!data || !data.user) {
+        console.error('❌ No user data returned');
+        throw new Error('Invalid credentials');
+      }
+
+      console.log('👤 User authenticated:', data.user.id);
+
+      // Check if user has admin role with timeout
+      const { data: profile, error: profileError } = await Promise.race([
+        supabase
+          .from('user_profiles')
+          .select('role')
+          .eq('id', data.user.id)
+          .single(),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Profile check timeout - please try again')), 10000)
+        )
+      ]);
+
+      console.log('📋 Profile check:', { profile, profileError });
+
+      if (profileError) {
+        console.error('❌ Profile error:', profileError);
+        await supabase.auth.signOut();
+        throw new Error('Failed to verify admin access');
+      }
 
       if (profile?.role !== 'admin') {
+        console.error('❌ User is not admin:', profile?.role);
         await supabase.auth.signOut();
         throw new Error('Unauthorized: Admin access required');
       }
 
+      console.log('✅ Admin verified, navigating to dashboard...');
       setUser(data.user);
       navigate('/admin/dashboard');
     } catch (err) {
-      setError(err.message);
-    } finally {
+      console.error('❌ Login error:', err);
+      setError(err.message || 'An error occurred during login');
       setLoading(false);
     }
   };
