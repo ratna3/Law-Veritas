@@ -113,48 +113,80 @@ export default function AdminDashboard() {
     setLoading(true);
 
     try {
-      // Update full name in user_profiles
-      if (fullName) {
-        const { error: profileError } = await supabase
-          .from('user_profiles')
-          .update({ full_name: fullName, updated_at: new Date().toISOString() })
-          .eq('id', user.id);
+      let passwordUpdated = false;
+      let profileUpdated = false;
 
-        if (profileError) throw profileError;
-      }
-
-      // Update password if provided
-      if (newPassword) {
+      // Update password if provided (check this first)
+      if (newPassword || confirmPassword) {
         // Trim whitespace from both passwords before comparing
-        const trimmedNewPassword = newPassword.trim();
-        const trimmedConfirmPassword = confirmPassword.trim();
+        const trimmedNewPassword = (newPassword || '').trim();
+        const trimmedConfirmPassword = (confirmPassword || '').trim();
         
-        console.log('Password comparison:', {
+        // Debug logging
+        console.log('Password Debug:', {
+          newPasswordRaw: `"${newPassword}"`,
+          confirmPasswordRaw: `"${confirmPassword}"`,
+          newPasswordTrimmed: `"${trimmedNewPassword}"`,
+          confirmPasswordTrimmed: `"${trimmedConfirmPassword}"`,
           newPasswordLength: trimmedNewPassword.length,
           confirmPasswordLength: trimmedConfirmPassword.length,
-          areEqual: trimmedNewPassword === trimmedConfirmPassword
+          areEqual: trimmedNewPassword === trimmedConfirmPassword,
+          charCodes: {
+            new: Array.from(trimmedNewPassword).map(c => c.charCodeAt(0)),
+            confirm: Array.from(trimmedConfirmPassword).map(c => c.charCodeAt(0))
+          }
         });
         
+        // Check if both fields are filled
+        if (!trimmedNewPassword || !trimmedConfirmPassword) {
+          throw new Error('Both password fields are required');
+        }
+        
+        // Check if passwords match
         if (trimmedNewPassword !== trimmedConfirmPassword) {
           throw new Error('Passwords do not match');
         }
         
+        // Check minimum length
         if (trimmedNewPassword.length < 8) {
           throw new Error('Password must be at least 8 characters');
         }
 
+        // Update password
         const { error: passwordError } = await supabase.auth.updateUser({
           password: trimmedNewPassword
         });
 
         if (passwordError) throw passwordError;
         
+        passwordUpdated = true;
         setNewPassword('');
         setConfirmPassword('');
       }
 
-      setSettingsMessage('Settings updated successfully!');
-      setTimeout(() => setSettingsMessage(''), 3000);
+      // Update full name in user_profiles
+      if (fullName && fullName.trim()) {
+        const { error: profileError } = await supabase
+          .from('user_profiles')
+          .update({ full_name: fullName.trim(), updated_at: new Date().toISOString() })
+          .eq('id', user.id);
+
+        if (profileError) throw profileError;
+        profileUpdated = true;
+      }
+
+      // Success message
+      if (passwordUpdated && profileUpdated) {
+        setSettingsMessage('Profile and password updated successfully!');
+      } else if (passwordUpdated) {
+        setSettingsMessage('Password updated successfully! You can use it on next login.');
+      } else if (profileUpdated) {
+        setSettingsMessage('Profile updated successfully!');
+      } else {
+        setSettingsMessage('No changes were made');
+      }
+      
+      setTimeout(() => setSettingsMessage(''), 5000);
     } catch (error) {
       console.error('Settings update error:', error);
       setSettingsMessage('Error: ' + error.message);
@@ -248,11 +280,16 @@ export default function AdminDashboard() {
                   </label>
                   <input
                     type="password"
+                    name="new-password"
+                    id="new-password"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     autoComplete="new-password"
+                    autoCorrect="off"
+                    autoCapitalize="off"
+                    spellCheck="false"
                     className="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-neon-green transition-colors"
-                    placeholder="••••••••"
+                    placeholder="Enter new password"
                   />
                 </div>
 
@@ -262,11 +299,16 @@ export default function AdminDashboard() {
                   </label>
                   <input
                     type="password"
+                    name="confirm-password"
+                    id="confirm-password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     autoComplete="new-password"
+                    autoCorrect="off"
+                    autoCapitalize="off"
+                    spellCheck="false"
                     className="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-neon-green transition-colors"
-                    placeholder="••••••••"
+                    placeholder="Confirm new password"
                   />
                 </div>
               </div>
