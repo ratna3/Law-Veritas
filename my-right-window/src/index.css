@@ -155,3 +155,88 @@
     box-shadow: var(--shadow-card-hover);
   }
 }
+
+/* Markdown Content Styling */
+.markdown-content {
+  @apply text-gray-700 leading-relaxed text-lg;
+}
+
+.markdown-content h1 {
+  @apply text-3xl font-serif font-bold text-gray-900 mt-8 mb-4;
+}
+
+.markdown-content h2 {
+  @apply text-2xl font-serif font-bold text-gray-900 mt-6 mb-3;
+}
+
+.markdown-content h3 {
+  @apply text-xl font-serif font-bold text-gray-900 mt-5 mb-2;
+}
+
+.markdown-content h4 {
+  @apply text-lg font-serif font-semibold text-gray-900 mt-4 mb-2;
+}
+
+.markdown-content p {
+  @apply mb-4 leading-relaxed;
+}
+
+.markdown-content strong {
+  @apply text-gray-900 font-semibold;
+}
+
+.markdown-content em {
+  @apply italic;
+}
+
+.markdown-content a {
+  @apply text-navy underline decoration-gold underline-offset-2 hover:text-gold transition-colors;
+}
+
+.markdown-content ul {
+  @apply list-disc pl-6 my-4;
+}
+
+.markdown-content ol {
+  @apply list-decimal pl-6 my-4;
+}
+
+.markdown-content li {
+  @apply mb-2;
+}
+
+.markdown-content blockquote {
+  @apply border-l-4 border-gold pl-4 italic text-gray-600 my-4;
+}
+
+.markdown-content code {
+  @apply bg-gray-100 px-1.5 py-0.5 rounded text-sm font-mono;
+}
+
+.markdown-content pre {
+  @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto my-4;
+}
+
+.markdown-content pre code {
+  @apply bg-transparent p-0;
+}
+
+.markdown-content hr {
+  @apply border-gray-200 my-8;
+}
+
+.markdown-content table {
+  @apply w-full border-collapse my-4;
+}
+
+.markdown-content th {
+  @apply bg-gray-100 border border-gray-200 px-4 py-2 text-left font-semibold;
+}
+
+.markdown-content td {
+  @apply border border-gray-200 px-4 py-2;
+}
+
+.markdown-content img {
+  @apply rounded-lg my-4 max-w-full h-auto;
+}

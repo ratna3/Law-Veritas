@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { useBlogStore } from '../store';
 import PDFViewer from '../components/blog/PDFViewer';
 import ImageGallery from '../components/blog/ImageGallery';
@@ -142,8 +144,10 @@ const BlogDetail = () => {
           {/* Main Content */}
           <div className="mb-12 animate-slideUp" style={{ animationDelay: '0.1s' }}>
             <div className="card-elevated p-8 md:p-12">
-              <div className="text-gray-700 leading-relaxed whitespace-pre-wrap text-lg">
-                {currentBlog.content}
+              <div className="markdown-content">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {currentBlog.content}
+                </ReactMarkdown>
               </div>
             </div>
           </div>
