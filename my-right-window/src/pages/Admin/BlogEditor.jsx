@@ -141,19 +141,33 @@ export default function BlogEditor() {
     setLoading(true);
 
     try {
-      const slug = formData.title
+      // Robust slug generation
+      let slug = formData.title
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/(^-|-$)/g, '');
+
+      // If slug is empty (e.g. title was only special chars), use timestamp
+      if (!slug) {
+        slug = `article-${Date.now()}`;
+      }
+
+      // Ensure unique slug by appending date if needed (simple collision avoidance)
+      // For a more robust solution we'd check DB, but this helps significantly
+      if (!id) {
+        slug = `${slug}-${Math.floor(Date.now() / 1000)}`;
+      }
 
       const blogData = {
         title: formData.title,
         content: formData.content,
         author: formData.author,
         slug,
-        tags: formData.tags.split(',').map(t => t.trim()).filter(Boolean),
-        // Extract URLs from image objects
-        images: images.map(img => img.url),
+        tags: Array.isArray(formData.tags)
+          ? formData.tags
+          : (formData.tags ? formData.tags.split(',').map(t => t.trim()).filter(Boolean) : []),
+        // Extract URLs from image objects, ensure it's an array
+        images: Array.isArray(images) ? images.map(img => img.url) : [],
         pdf_url: pdf?.url || null,
         pdf_name: pdf?.name || null,
         published: formData.published,
@@ -180,7 +194,8 @@ export default function BlogEditor() {
       await fetchBlogs();
       navigate('/admin/dashboard');
     } catch (error) {
-      alert('Error saving blog: ' + error.message);
+      console.error('Submission error:', error);
+      alert(`Error saving blog: ${error.message}${error.details ? ` (${error.details})` : ''}${error.hint ? ` - Hint: ${error.hint}` : ''}`);
     } finally {
       setLoading(false);
     }
