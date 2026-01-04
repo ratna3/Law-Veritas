@@ -7,7 +7,7 @@ export default function BlogEditor() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { fetchBlogs } = useBlogStore();
-  
+
   const [formData, setFormData] = useState({
     title: '',
     content: '',
@@ -40,7 +40,11 @@ export default function BlogEditor() {
         });
 
         if (data.images) {
-          setImages(data.images);
+          // Convert string URLs to object structure used by component
+          setImages(data.images.map(url => ({
+            url,
+            alt: '' // Database doesn't store alt text currently
+          })));
         }
       } catch (error) {
         alert('Error loading blog: ' + error.message);
@@ -148,7 +152,8 @@ export default function BlogEditor() {
         author: formData.author,
         slug,
         tags: formData.tags.split(',').map(t => t.trim()).filter(Boolean),
-        images,
+        // Extract URLs from image objects
+        images: images.map(img => img.url),
         pdf_url: pdf?.url || null,
         pdf_name: pdf?.name || null,
         published: formData.published,
@@ -283,7 +288,7 @@ export default function BlogEditor() {
           {/* Media Section */}
           <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-card">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Media</h3>
-            
+
             {/* Images */}
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -358,7 +363,7 @@ export default function BlogEditor() {
           {/* Publishing Options */}
           <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-card">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Publishing</h3>
-            
+
             <div className="flex items-center">
               <input
                 type="checkbox"
