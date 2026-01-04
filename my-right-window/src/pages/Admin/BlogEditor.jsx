@@ -245,6 +245,12 @@ export default function BlogEditor() {
               <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-2">
                 Content *
               </label>
+              <div className="mb-3 text-xs text-gray-500 bg-gray-50 p-2 rounded-lg border border-gray-100 flex gap-4 flex-wrap">
+                <span>**bold**</span>
+                <span>*italic*</span>
+                <span>[link](url)</span>
+                <span>- bullet point</span>
+              </div>
               <textarea
                 id="content"
                 name="content"
