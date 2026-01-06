@@ -63,15 +63,15 @@ const Home = () => {
           }}></div>
         </div>
 
-        <div ref={heroRef} className="relative z-10 text-center max-w-5xl mx-auto px-4 pt-20">
+        <div ref={heroRef} className="relative z-10 text-center max-w-5xl mx-auto px-4 pt-28">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-navy/5 to-gold/5 border border-navy/10 rounded-full mb-8 animate-slideUp shadow-sm">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-navy/5 to-gold/5 border border-navy/10 rounded-full mb-10 animate-slideUp shadow-sm">
             <span className="w-2 h-2 bg-gold rounded-full animate-pulse"></span>
             <span className="text-sm font-medium text-navy tracking-wide">Trusted Legal Excellence Since 2025</span>
           </div>
 
           {/* Creative Brand Name Display */}
-          <h1 className="mb-6 animate-slideUp">
+          <h1 className="mb-6 animate-slideUp leading-none pt-2">
             <div className="flex flex-col items-center gap-2">
               {/* Main Title with Creative Split */}
               <div className="flex items-baseline justify-center flex-wrap gap-x-2">
