@@ -71,17 +71,17 @@ const Home = () => {
           </div>
 
           {/* Creative Brand Name Display */}
-          <h1 className="mb-6 animate-slideUp leading-none pt-2">
-            <div className="flex flex-col items-center gap-2">
+          <h1 className="mb-6 animate-slideUp overflow-visible">
+            <div className="flex flex-col items-center gap-2 overflow-visible">
               {/* Main Title with Creative Split */}
-              <div className="flex items-baseline justify-center flex-wrap gap-x-2">
+              <div className="flex items-baseline justify-center flex-wrap gap-x-2 overflow-visible pb-2">
                 <span className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-navy tracking-tight">
                   Law
                 </span>
                 <span className="text-4xl md:text-6xl lg:text-7xl font-serif font-light text-gold/80">
                   -
                 </span>
-                <span className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold bg-gradient-to-r from-gold via-amber-500 to-gold bg-clip-text text-transparent">
+                <span className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold bg-gradient-to-r from-gold via-amber-500 to-gold bg-clip-text text-transparent pb-2 inline-block">
                   gically
                 </span>
               </div>
