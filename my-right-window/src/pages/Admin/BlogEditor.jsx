@@ -211,7 +211,7 @@ export default function BlogEditor() {
               <h1 className="text-2xl font-serif font-bold text-navy">
                 {id ? 'Edit Article' : 'Create New Article'}
               </h1>
-              <p className="text-gray-500 text-sm mt-1">Law Veritas Admin</p>
+              <p className="text-gray-500 text-sm mt-1">Law-gically Yours Admin</p>
             </div>
             <button
               onClick={() => navigate('/admin/dashboard')}

@@ -1,8 +1,8 @@
-# Law Veritas ⚖️
+# Law-gically Yours ⚖️
 
 <div align="center">
 
-![Law Veritas](https://img.shields.io/badge/Law-Veritas-1a365d?style=for-the-badge&logo=scale&logoColor=gold)
+![Law-gically Yours](https://img.shields.io/badge/Law--gically_Yours-1a365d?style=for-the-badge&logo=scale&logoColor=gold)
 ![React](https://img.shields.io/badge/React-18.3.1-61DAFB?style=for-the-badge&logo=react)
 ![Vite](https://img.shields.io/badge/Vite-5.4-646CFF?style=for-the-badge&logo=vite)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.1-38B2AC?style=for-the-badge&logo=tailwind-css)
@@ -18,7 +18,7 @@
 
 ## 📖 About
 
-Law Veritas is a professional legal blog platform designed to share legal insights, case analyses, and constitutional law articles. Built with modern web technologies, it features:
+Law-gically Yours is a professional legal blog platform designed to share legal insights, case analyses, and constitutional law articles. Built with modern web technologies, it features:
 
 - 🎨 **Beautiful UI** - Clean, professional design with elegant typography
 - ✍️ **Rich Markdown Support** - Full markdown rendering with GitHub Flavored Markdown (GFM)

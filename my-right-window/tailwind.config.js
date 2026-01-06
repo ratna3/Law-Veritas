@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Law Veritas - Professional Masculine Color Palette
+        // Law-gically Yours - Professional Masculine Color Palette
         'primary': {
           50: '#f8fafc',
           100: '#f1f5f9',

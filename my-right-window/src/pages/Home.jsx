@@ -74,18 +74,18 @@ const Home = () => {
             <span className="text-navy">Law</span>
             <span className="text-gold ml-4">Veritas</span>
           </h1>
-          
+
           <div className="divider-gold animate-slideUp" style={{ animationDelay: '0.1s' }}></div>
-          
+
           <p className="text-xl md:text-2xl text-gray-600 mb-4 animate-slideUp font-light" style={{ animationDelay: '0.2s' }}>
             Your Partner in Legal Excellence
           </p>
-          
+
           <p className="text-lg text-gray-500 mb-12 max-w-2xl mx-auto animate-slideUp leading-relaxed" style={{ animationDelay: '0.3s' }}>
-            Providing expert legal counsel with integrity, strategy, and unwavering commitment to justice. 
+            Providing expert legal counsel with integrity, strategy, and unwavering commitment to justice.
             We navigate complex legal challenges with precision and care.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slideUp" style={{ animationDelay: '0.4s' }}>
             <Link to="/blogs" className="btn-primary group inline-flex items-center justify-center">
               Explore Our Insights
@@ -120,8 +120,8 @@ const Home = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {services.map((service, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="card-elevated text-center group cursor-pointer"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
@@ -146,24 +146,24 @@ const Home = () => {
               The pillars that guide our practice and define our commitment to you
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {models.map((model, index) => (
               <div key={index} className="flex flex-col items-center group">
                 {/* 3D Model Container */}
                 <div className="w-full h-80 md:h-96 mb-8 rounded-2xl overflow-hidden bg-gradient-to-br from-slate-100 to-white border border-gray-200 shadow-elegant group-hover:shadow-elegant-lg transition-all duration-500">
-                  <ModelScene 
-                    modelPath={model.path} 
+                  <ModelScene
+                    modelPath={model.path}
                     scale={model.scale}
                     cameraPosition={[0, 0, 5]}
                   />
                 </div>
-                
+
                 {/* Title Badge */}
                 <div className="inline-flex items-center gap-2 px-4 py-1 bg-gold/10 rounded-full mb-4">
                   <span className="text-sm font-semibold text-gold uppercase tracking-wider">{model.title}</span>
                 </div>
-                
+
                 {/* Tagline */}
                 <p className="text-center text-lg text-gray-600 leading-relaxed max-w-sm px-4">
                   {model.tagline}
@@ -184,15 +184,15 @@ const Home = () => {
               Stay informed with our latest legal perspectives and analysis
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredBlogs.length > 0 ? (
               featuredBlogs.map((blog) => (
                 <div key={blog.id} className="card group hover:border-gold/30 transition-all duration-300">
                   <div className="h-48 bg-gradient-to-br from-slate-100 to-slate-50 rounded-xl mb-6 flex items-center justify-center overflow-hidden">
                     {blog.images && blog.images.length > 0 ? (
-                      <img 
-                        src={blog.images[0]} 
+                      <img
+                        src={blog.images[0]}
                         alt={blog.title}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
@@ -254,7 +254,7 @@ const Home = () => {
       <section className="py-24 px-4 bg-navy text-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">
-            About Law Veritas
+            About Law-gically Yours
           </h2>
           <div className="w-24 h-1 bg-gold mx-auto my-8 rounded-full"></div>
           <p className="text-lg text-gray-300 mb-6 leading-relaxed">
@@ -292,7 +292,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
-              <span className="text-2xl font-serif font-bold">Law Veritas</span>
+              <span className="text-2xl font-serif font-bold">Law-gically Yours</span>
               <span className="text-gray-400 text-sm">| Legal Excellence</span>
             </div>
             <div className="flex items-center gap-6 text-gray-400 text-sm">
@@ -301,7 +301,7 @@ const Home = () => {
               <Link to="/admin/login" className="hover:text-white transition-colors">Admin</Link>
             </div>
             <p className="text-gray-500 text-sm">
-              © 2024 Law Veritas. All rights reserved.
+              © 2024 Law-gically Yours. All rights reserved.
             </p>
           </div>
         </div>

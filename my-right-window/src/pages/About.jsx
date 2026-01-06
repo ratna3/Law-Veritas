@@ -5,22 +5,22 @@ const About = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4 text-navy">
-            About Law Veritas
+            About Law-gically Yours
           </h1>
           <div className="w-24 h-1 bg-gold mx-auto rounded-full"></div>
         </div>
-        
+
         <div className="bg-white rounded-2xl border border-gray-200 shadow-card p-8 md:p-12">
           <p className="text-lg mb-8 text-gray-600 leading-relaxed">
-            Welcome to <span className="text-navy font-semibold">Law Veritas</span>, where truth meets justice. 
-            We are dedicated to providing exceptional legal insights and expertise that guide you through 
+            Welcome to <span className="text-navy font-semibold">Law-gically Yours</span>, where truth meets justice.
+            We are dedicated to providing exceptional legal insights and expertise that guide you through
             complex legal landscapes with clarity and confidence.
           </p>
 
           <h2 className="text-2xl font-serif font-bold mt-8 mb-4 text-navy">Our Mission</h2>
           <p className="text-gray-600 mb-6 leading-relaxed">
-            At Law Veritas, we believe in making legal knowledge accessible and understandable. 
-            Through comprehensive analysis and clear communication, we empower individuals and businesses 
+            At Law-gically Yours, we believe in making legal knowledge accessible and understandable.
+            Through comprehensive analysis and clear communication, we empower individuals and businesses
             to make informed decisions in legal matters that affect their lives.
           </p>
 
@@ -81,7 +81,7 @@ const About = () => {
 
           <div className="mt-12 p-6 bg-gradient-to-r from-navy/5 to-gold/5 rounded-xl border border-navy/10">
             <p className="text-gray-600 text-center italic">
-              "Justice that speaks truth — your trusted partner in navigating the legal landscape 
+              "Justice that speaks truth — your trusted partner in navigating the legal landscape
               with clarity, integrity, and unwavering commitment to excellence."
             </p>
           </div>

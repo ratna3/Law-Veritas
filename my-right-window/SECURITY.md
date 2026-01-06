@@ -2,7 +2,7 @@
 
 ## 🔒 Supported Versions
 
-The following versions of Law Veritas are currently being supported with security updates:
+The following versions of Law-gically Yours are currently being supported with security updates:
 
 | Version | Supported          |
 | ------- | ------------------ |
@@ -11,7 +11,7 @@ The following versions of Law Veritas are currently being supported with securit
 
 ## 🛡️ Reporting a Vulnerability
 
-We take the security of Law Veritas seriously. If you discover a security vulnerability, please follow these steps:
+We take the security of Law-gically Yours seriously. If you discover a security vulnerability, please follow these steps:
 
 ### How to Report
 
@@ -37,7 +37,7 @@ We take the security of Law Veritas seriously. If you discover a security vulner
 
 ## 🔐 Security Best Practices
 
-When using Law Veritas, please follow these security guidelines:
+When using Law-gically Yours, please follow these security guidelines:
 
 ### Environment Variables
 
@@ -90,4 +90,4 @@ For security-related inquiries:
 
 ---
 
-Thank you for helping keep Law Veritas secure! 🙏
+Thank you for helping keep Law-gically Yours secure! 🙏

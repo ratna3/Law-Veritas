@@ -24,11 +24,10 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
           ? 'bg-white/95 backdrop-blur-md shadow-elegant border-b border-gray-100'
           : 'bg-transparent'
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
@@ -36,11 +35,11 @@ export default function Navbar() {
           <Link to="/" className="flex items-center space-x-3">
             <div className="flex items-center">
               <svg className="w-10 h-10 text-navy" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="2" fill="none"/>
-                <path d="M20 8L20 32M12 20H28M14 14L26 26M26 14L14 26" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="2" fill="none" />
+                <path d="M20 8L20 32M12 20H28M14 14L26 26M26 14L14 26" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
               <div className="ml-3">
-                <span className="text-2xl font-serif font-bold text-navy">Law Veritas</span>
+                <span className="text-2xl font-serif font-bold text-navy">Law-gically Yours</span>
                 <span className={`hidden sm:block text-xs tracking-wider ${isScrolled ? 'text-gray-500' : 'text-gray-600'}`}>
                   LEGAL EXCELLENCE
                 </span>
@@ -54,16 +53,14 @@ export default function Navbar() {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`text-sm font-medium tracking-wide transition-colors relative group ${
-                  location.pathname === link.path
+                className={`text-sm font-medium tracking-wide transition-colors relative group ${location.pathname === link.path
                     ? 'text-gold'
                     : `${isScrolled ? 'text-gray-700' : 'text-gray-700'} hover:text-navy`
-                }`}
+                  }`}
               >
                 {link.label}
-                <span className={`absolute -bottom-1 left-0 h-0.5 bg-gold transition-all duration-300 ${
-                  location.pathname === link.path ? 'w-full' : 'w-0 group-hover:w-full'
-                }`}></span>
+                <span className={`absolute -bottom-1 left-0 h-0.5 bg-gold transition-all duration-300 ${location.pathname === link.path ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}></span>
               </Link>
             ))}
             <UserAuthButton />
@@ -105,19 +102,18 @@ export default function Navbar() {
                 key={link.path}
                 to={link.path}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${
-                  location.pathname === link.path
+                className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${location.pathname === link.path
                     ? 'text-gold bg-gray-50'
                     : 'text-gray-700 hover:text-navy hover:bg-gray-50'
-                }`}
+                  }`}
               >
                 {link.label}
               </Link>
             ))}
             <div className="pt-4 space-y-3">
               <UserAuthButton />
-              <Link 
-                to="/blogs" 
+              <Link
+                to="/blogs"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="btn-primary block text-center"
               >

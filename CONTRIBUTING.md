@@ -1,8 +1,8 @@
-# Contributing to Law Veritas
+# Contributing to Law-gically Yours
 
-First off, thank you for considering contributing to Law Veritas! 🎉
+First off, thank you for considering contributing to Law-gically Yours! 🎉
 
-It's people like you that make Law Veritas such a great platform for legal insights.
+It's people like you that make Law-gically Yours such a great platform for legal insights.
 
 ## 📋 Table of Contents
 
@@ -236,6 +236,6 @@ If you have questions, feel free to:
 
 ---
 
-Thank you for contributing to Law Veritas! ⚖️
+Thank you for contributing to Law-gically Yours! ⚖️
 
-Made with ❤️ by the Law Veritas community
+Made with ❤️ by the Law-gically Yours community

@@ -11,7 +11,7 @@ export default function AdminDashboard() {
   const [showSettings, setShowSettings] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [blogToDelete, setBlogToDelete] = useState(null);
-  
+
   // Settings state
   const [fullName, setFullName] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -21,13 +21,13 @@ export default function AdminDashboard() {
   useEffect(() => {
     const loadUserProfile = async () => {
       if (!user) return;
-      
+
       const { data } = await supabase
         .from('user_profiles')
         .select('full_name')
         .eq('id', user.id)
         .single();
-      
+
       if (data) {
         setFullName(data.full_name || '');
       }
@@ -36,7 +36,7 @@ export default function AdminDashboard() {
     fetchBlogs(false); // Fetch all blogs including unpublished
     const channel = subscribeToBlogs();
     loadUserProfile();
-    
+
     return () => {
       channel?.unsubscribe();
     };
@@ -49,7 +49,7 @@ export default function AdminDashboard() {
 
   const handleDelete = async () => {
     if (!blogToDelete) return;
-    
+
     setLoading(true);
     try {
       // Delete blog images from storage
@@ -58,7 +58,7 @@ export default function AdminDashboard() {
           const match = url.match(/images\/(.+)$/);
           return match ? match[1] : null;
         }).filter(Boolean);
-        
+
         if (imagePaths.length > 0) {
           await supabase.storage.from('images').remove(imagePaths);
         }
@@ -138,7 +138,7 @@ export default function AdminDashboard() {
         // Trim whitespace from both passwords before comparing
         const trimmedNewPassword = (newPassword || '').trim();
         const trimmedConfirmPassword = (confirmPassword || '').trim();
-        
+
         // Debug logging
         console.log('Password Debug:', {
           newPasswordRaw: `"${newPassword}"`,
@@ -153,17 +153,17 @@ export default function AdminDashboard() {
             confirm: Array.from(trimmedConfirmPassword).map(c => c.charCodeAt(0))
           }
         });
-        
+
         // Check if both fields are filled
         if (!trimmedNewPassword || !trimmedConfirmPassword) {
           throw new Error('Both password fields are required');
         }
-        
+
         // Check if passwords match
         if (trimmedNewPassword !== trimmedConfirmPassword) {
           throw new Error('Passwords do not match');
         }
-        
+
         // Check minimum length
         if (trimmedNewPassword.length < 8) {
           throw new Error('Password must be at least 8 characters');
@@ -175,7 +175,7 @@ export default function AdminDashboard() {
         });
 
         if (passwordError) throw passwordError;
-        
+
         passwordUpdated = true;
         setNewPassword('');
         setConfirmPassword('');
@@ -202,7 +202,7 @@ export default function AdminDashboard() {
       } else {
         setSettingsMessage('No changes were made');
       }
-      
+
       setTimeout(() => setSettingsMessage(''), 5000);
     } catch (error) {
       console.error('Settings update error:', error);
@@ -227,7 +227,7 @@ export default function AdminDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-serif font-bold text-navy">Law Veritas Admin</h1>
+              <h1 className="text-2xl font-serif font-bold text-navy">Law-gically Yours Admin</h1>
               <p className="text-gray-500 text-sm mt-1">Manage your articles and content</p>
             </div>
             <div className="flex items-center gap-3">
@@ -257,13 +257,12 @@ export default function AdminDashboard() {
         {showSettings && (
           <div className="mb-8 bg-white border border-gray-200 rounded-2xl p-6 shadow-elegant">
             <h2 className="text-xl font-serif font-bold text-gray-900 mb-6">Account Settings</h2>
-            
+
             {settingsMessage && (
-              <div className={`mb-4 px-4 py-3 rounded-xl flex items-center gap-2 ${
-                settingsMessage.includes('Error') 
+              <div className={`mb-4 px-4 py-3 rounded-xl flex items-center gap-2 ${settingsMessage.includes('Error')
                   ? 'bg-red-50 border border-red-200 text-red-700'
                   : 'bg-green-50 border border-green-200 text-green-700'
-              }`}>
+                }`}>
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   {settingsMessage.includes('Error') ? (
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
@@ -288,7 +287,7 @@ export default function AdminDashboard() {
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-400 cursor-not-allowed"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Full Name
@@ -481,20 +480,18 @@ export default function AdminDashboard() {
                         {blog.author}
                       </td>
                       <td className="px-6 py-4">
-                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                          blog.published 
+                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${blog.published
                             ? 'bg-green-50 text-green-700 border border-green-200'
                             : 'bg-amber-50 text-amber-700 border border-amber-200'
-                        }`}>
+                          }`}>
                           {blog.published ? 'Published' : 'Draft'}
                         </span>
                       </td>
                       <td className="px-6 py-4">
-                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                          blog.featured 
+                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${blog.featured
                             ? 'bg-purple-50 text-purple-700 border border-purple-200'
                             : 'bg-gray-50 text-gray-500 border border-gray-200'
-                        }`}>
+                          }`}>
                           {blog.featured ? '⭐ Featured' : 'Not Featured'}
                         </span>
                       </td>
@@ -519,11 +516,10 @@ export default function AdminDashboard() {
                           <button
                             onClick={() => toggleFeatured(blog)}
                             disabled={loading}
-                            className={`px-3 py-1.5 rounded-lg transition-colors text-sm font-medium disabled:opacity-50 ${
-                              blog.featured 
+                            className={`px-3 py-1.5 rounded-lg transition-colors text-sm font-medium disabled:opacity-50 ${blog.featured
                                 ? 'bg-purple-100 text-purple-700 hover:bg-purple-200'
                                 : 'bg-purple-50 text-purple-600 hover:bg-purple-100'
-                            }`}
+                              }`}
                           >
                             {blog.featured ? 'Unfeature' : 'Feature'}
                           </button>

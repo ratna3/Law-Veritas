@@ -18,14 +18,14 @@ export default function Login() {
 
     try {
       console.log('🔐 Starting login process...');
-      
+
       // Sign in with timeout
       const { data, error: signInError } = await Promise.race([
         supabase.auth.signInWithPassword({
           email: email.trim(),
           password: password,
         }),
-        new Promise((_, reject) => 
+        new Promise((_, reject) =>
           setTimeout(() => reject(new Error('Login timeout - please try again')), 15000)
         )
       ]);
@@ -51,7 +51,7 @@ export default function Login() {
           .select('role')
           .eq('id', data.user.id)
           .single(),
-        new Promise((_, reject) => 
+        new Promise((_, reject) =>
           setTimeout(() => reject(new Error('Profile check timeout - please try again')), 10000)
         )
       ]);
@@ -85,13 +85,13 @@ export default function Login() {
       <div className="max-w-md w-full">
         {/* Logo */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-serif font-bold text-navy mb-2">Law Veritas</h1>
+          <h1 className="text-3xl font-serif font-bold text-navy mb-2">Law-gically Yours</h1>
           <div className="w-16 h-1 bg-gold mx-auto rounded-full"></div>
         </div>
 
         <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-elegant-lg">
           <h2 className="text-2xl font-serif font-bold text-gray-900 mb-2">Admin Login</h2>
-          <p className="text-gray-500 mb-8">Access the Law Veritas admin panel</p>
+          <p className="text-gray-500 mb-8">Access the Law-gically Yours admin panel</p>
 
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-6 flex items-start gap-3">
@@ -151,7 +151,7 @@ export default function Login() {
         </div>
 
         <p className="text-center text-gray-400 text-sm mt-6">
-          © 2024 Law Veritas. All rights reserved.
+          © 2024 Law-gically Yours. All rights reserved.
         </p>
       </div>
     </div>
