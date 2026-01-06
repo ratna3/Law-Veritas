@@ -65,14 +65,35 @@ const Home = () => {
 
         <div ref={heroRef} className="relative z-10 text-center max-w-5xl mx-auto px-4 pt-20">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-navy/5 border border-navy/10 rounded-full mb-8 animate-slideUp">
-            <span className="w-2 h-2 bg-gold rounded-full"></span>
-            <span className="text-sm font-medium text-navy">Trusted Legal Excellence Since 2024</span>
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-navy/5 to-gold/5 border border-navy/10 rounded-full mb-8 animate-slideUp shadow-sm">
+            <span className="w-2 h-2 bg-gold rounded-full animate-pulse"></span>
+            <span className="text-sm font-medium text-navy tracking-wide">Trusted Legal Excellence Since 2025</span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold mb-6 animate-slideUp text-gray-900">
-            <span className="text-navy">Law</span>
-            <span className="text-gold ml-4">Veritas</span>
+          {/* Creative Brand Name Display */}
+          <h1 className="mb-6 animate-slideUp">
+            <div className="flex flex-col items-center gap-2">
+              {/* Main Title with Creative Split */}
+              <div className="flex items-baseline justify-center flex-wrap gap-x-2">
+                <span className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-navy tracking-tight">
+                  Law
+                </span>
+                <span className="text-4xl md:text-6xl lg:text-7xl font-serif font-light text-gold/80">
+                  -
+                </span>
+                <span className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold bg-gradient-to-r from-gold via-amber-500 to-gold bg-clip-text text-transparent">
+                  gically
+                </span>
+              </div>
+              {/* Yours - Elegant Accent */}
+              <div className="flex items-center gap-4">
+                <span className="hidden sm:block w-12 h-0.5 bg-gradient-to-r from-transparent to-navy/30 rounded-full"></span>
+                <span className="text-3xl md:text-4xl lg:text-5xl font-serif italic font-medium text-navy/80 tracking-widest">
+                  Yours
+                </span>
+                <span className="hidden sm:block w-12 h-0.5 bg-gradient-to-l from-transparent to-gold/50 rounded-full"></span>
+              </div>
+            </div>
           </h1>
 
           <div className="divider-gold animate-slideUp" style={{ animationDelay: '0.1s' }}></div>
@@ -301,7 +322,7 @@ const Home = () => {
               <Link to="/admin/login" className="hover:text-white transition-colors">Admin</Link>
             </div>
             <p className="text-gray-500 text-sm">
-              © 2024 Law-gically Yours. All rights reserved.
+              © 2025 Law-gically Yours. All rights reserved.
             </p>
           </div>
         </div>

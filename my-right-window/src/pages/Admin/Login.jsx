@@ -151,7 +151,7 @@ export default function Login() {
         </div>
 
         <p className="text-center text-gray-400 text-sm mt-6">
-          © 2024 Law-gically Yours. All rights reserved.
+          © 2025 Law-gically Yours. All rights reserved.
         </p>
       </div>
     </div>
