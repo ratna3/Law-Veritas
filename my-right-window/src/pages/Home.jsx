@@ -157,6 +157,76 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Bare Acts Section */}
+      <section className="py-24 px-4 bg-gradient-to-b from-white to-slate-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="section-title">Bare Acts</h2>
+            <div className="divider-gold"></div>
+            <p className="section-subtitle">
+              Your comprehensive legal reference library
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            {/* Content Side */}
+            <div className="order-2 lg:order-1">
+              <div className="inline-flex items-center gap-2 px-4 py-1 bg-gold/10 rounded-full mb-6">
+                <span className="text-sm font-semibold text-gold uppercase tracking-wider">Legal Documents</span>
+              </div>
+              <h3 className="text-3xl md:text-4xl font-serif font-bold text-navy mb-6">
+                Access Authentic Legislative Texts
+              </h3>
+              <p className="text-gray-600 text-lg mb-6 leading-relaxed">
+                Explore our curated collection of Indian Bare Acts including Constitutional Laws, Civil Laws,
+                Criminal Laws, and Commercial Legislations. Your one-stop destination for authentic legal documents.
+              </p>
+              <div className="flex flex-wrap gap-3 mb-8">
+                {['Constitution', 'IPC', 'CPC', 'CrPC', 'Evidence Act', 'Contract Act'].map((tag, idx) => (
+                  <span key={idx} className="px-4 py-2 text-sm font-medium text-navy bg-navy/5 rounded-full border border-navy/10 hover:bg-navy/10 transition-colors cursor-pointer">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <Link to="/bareacts" className="btn-primary group inline-flex items-center">
+                Explore Bare Acts
+                <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </div>
+
+            {/* Visual Side */}
+            <div className="order-1 lg:order-2">
+              <div className="relative">
+                <div className="card-elevated p-8 bg-gradient-to-br from-navy/5 to-gold/5 border-2 border-navy/10">
+                  <div className="grid grid-cols-2 gap-4">
+                    {[
+                      { icon: '⚖️', title: 'Constitutional', count: 'Coming Soon' },
+                      { icon: '📋', title: 'Civil Laws', count: 'Coming Soon' },
+                      { icon: '🏛️', title: 'Criminal Laws', count: 'Coming Soon' },
+                      { icon: '💼', title: 'Commercial', count: 'Coming Soon' },
+                    ].map((item, idx) => (
+                      <div key={idx} className="p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                        <span className="text-3xl block mb-2">{item.icon}</span>
+                        <h4 className="font-semibold text-navy text-sm">{item.title}</h4>
+                        <p className="text-xs text-gray-400">{item.count}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-6 p-4 bg-gold/10 rounded-xl text-center">
+                    <span className="text-gold font-medium">📚 More acts coming soon!</span>
+                  </div>
+                </div>
+                {/* Decorative elements */}
+                <div className="absolute -top-4 -right-4 w-24 h-24 bg-gold/10 rounded-full blur-2xl -z-10"></div>
+                <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-navy/10 rounded-full blur-2xl -z-10"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 3D Models Section */}
       <section id="principles" className="py-24 px-4 bg-gradient-to-b from-slate-50 to-white">
         <div className="max-w-7xl mx-auto">
@@ -319,6 +389,7 @@ const Home = () => {
             <div className="flex items-center gap-6 text-gray-400 text-sm">
               <Link to="/" className="hover:text-white transition-colors">Home</Link>
               <Link to="/blogs" className="hover:text-white transition-colors">Insights</Link>
+              <Link to="/bareacts" className="hover:text-white transition-colors">Bare Acts</Link>
               <Link to="/admin/login" className="hover:text-white transition-colors">Admin</Link>
             </div>
             <p className="text-gray-500 text-sm">

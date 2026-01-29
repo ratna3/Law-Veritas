@@ -19,14 +19,15 @@ export default function Navbar() {
   const navLinks = [
     { path: '/', label: 'Home' },
     { path: '/blogs', label: 'Insights' },
+    { path: '/bareacts', label: 'Bare Acts' },
     { path: '/admin/login', label: 'Admin' },
   ];
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-elegant border-b border-gray-100'
-          : 'bg-transparent'
+        ? 'bg-white/95 backdrop-blur-md shadow-elegant border-b border-gray-100'
+        : 'bg-transparent'
         }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -54,8 +55,8 @@ export default function Navbar() {
                 key={link.path}
                 to={link.path}
                 className={`text-sm font-medium tracking-wide transition-colors relative group ${location.pathname === link.path
-                    ? 'text-gold'
-                    : `${isScrolled ? 'text-gray-700' : 'text-gray-700'} hover:text-navy`
+                  ? 'text-gold'
+                  : `${isScrolled ? 'text-gray-700' : 'text-gray-700'} hover:text-navy`
                   }`}
               >
                 {link.label}
@@ -103,8 +104,8 @@ export default function Navbar() {
                 to={link.path}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${location.pathname === link.path
-                    ? 'text-gold bg-gray-50'
-                    : 'text-gray-700 hover:text-navy hover:bg-gray-50'
+                  ? 'text-gold bg-gray-50'
+                  : 'text-gray-700 hover:text-navy hover:bg-gray-50'
                   }`}
               >
                 {link.label}
