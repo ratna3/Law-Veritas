@@ -31,14 +31,62 @@ const Bareacts = () => {
     const filteredActs = getFilteredActs();
 
     const formatContent = (content) => {
-        if (!content) return 'Content not available';
+        if (!content) return <p className="text-gray-500 italic">Content not available</p>;
 
-        // Split into paragraphs and format
-        return content.split('\n\n').map((para, idx) => (
-            <p key={idx} className="mb-4 leading-relaxed text-gray-700">
-                {para}
-            </p>
-        ));
+        // Pattern for detecting Article/Section headings
+        const headingPatterns = [
+            /^(PART [IVXLCDM]+)/i,
+            /^(CHAPTER [IVXLCDM0-9]+)/i,
+            /^(Article \d+)/i,
+            /^(Section \d+)/i,
+            /^(\d+\.\s)/,
+            /^(SCHEDULE|PREAMBLE|APPENDIX)/i,
+        ];
+
+        // Split content into lines for better formatting
+        const lines = content.split(/\n/);
+        const elements = [];
+        let currentParagraph = [];
+
+        const flushParagraph = () => {
+            if (currentParagraph.length > 0) {
+                const text = currentParagraph.join(' ').trim();
+                if (text) {
+                    elements.push(
+                        <p key={elements.length} className="mb-4 leading-relaxed text-gray-700 text-justify">
+                            {text}
+                        </p>
+                    );
+                }
+                currentParagraph = [];
+            }
+        };
+
+        lines.forEach((line) => {
+            const trimmedLine = line.trim();
+            if (!trimmedLine) {
+                flushParagraph();
+                return;
+            }
+
+            // Check if this is a heading
+            const isHeading = headingPatterns.some(pattern => pattern.test(trimmedLine));
+            const isAllCaps = trimmedLine === trimmedLine.toUpperCase() && trimmedLine.length > 3 && trimmedLine.length < 100;
+
+            if (isHeading || isAllCaps) {
+                flushParagraph();
+                elements.push(
+                    <h3 key={elements.length} className="text-lg font-bold text-navy mt-8 mb-4 border-b border-gray-200 pb-2">
+                        {trimmedLine}
+                    </h3>
+                );
+            } else {
+                currentParagraph.push(trimmedLine);
+            }
+        });
+
+        flushParagraph();
+        return elements;
     };
 
     const getHighlightedContent = (content, query) => {
@@ -48,10 +96,10 @@ const Bareacts = () => {
         const parts = content.split(regex);
 
         return (
-            <div className="leading-relaxed text-gray-700">
+            <div className="leading-relaxed text-gray-700 text-justify">
                 {parts.map((part, idx) =>
                     regex.test(part) ? (
-                        <mark key={idx} className="bg-yellow-200 px-0.5 rounded">{part}</mark>
+                        <mark key={idx} className="bg-yellow-300 px-1 py-0.5 rounded font-medium">{part}</mark>
                     ) : (
                         <span key={idx}>{part}</span>
                     )
@@ -119,8 +167,8 @@ const Bareacts = () => {
                         <button
                             onClick={() => setActiveCategory('all')}
                             className={`px-6 py-2.5 rounded-full font-medium text-sm transition-all duration-300 ${activeCategory === 'all'
-                                    ? 'bg-navy text-white shadow-md'
-                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                ? 'bg-navy text-white shadow-md'
+                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                 }`}
                         >
                             All Acts ({getAllActs().length})
@@ -130,8 +178,8 @@ const Bareacts = () => {
                                 key={category.id}
                                 onClick={() => setActiveCategory(category.id)}
                                 className={`px-6 py-2.5 rounded-full font-medium text-sm transition-all duration-300 flex items-center gap-2 ${activeCategory === category.id
-                                        ? 'bg-navy text-white shadow-md'
-                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                    ? 'bg-navy text-white shadow-md'
+                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                     }`}
                             >
                                 <span>{category.icon}</span>
@@ -209,40 +257,17 @@ const Bareacts = () => {
                                     )}
 
                                     {/* Actions */}
-                                    <div className="flex items-center gap-2 flex-wrap">
-                                        <button
-                                            onClick={() => setSelectedAct(act)}
-                                            className="btn-primary flex-1 text-center text-sm py-2.5"
-                                        >
-                                            <span className="flex items-center justify-center gap-2">
-                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                                                </svg>
-                                                Read Online
-                                            </span>
-                                        </button>
-                                        <a
-                                            href={act.pdfPath}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="btn-secondary text-sm py-2.5 px-3"
-                                            title="View PDF"
-                                        >
+                                    <button
+                                        onClick={() => setSelectedAct(act)}
+                                        className="btn-primary w-full text-center text-sm py-3"
+                                    >
+                                        <span className="flex items-center justify-center gap-2">
                                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                                             </svg>
-                                        </a>
-                                        <a
-                                            href={act.pdfPath}
-                                            download
-                                            className="btn-secondary text-sm py-2.5 px-3"
-                                            title="Download PDF"
-                                        >
-                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                            </svg>
-                                        </a>
-                                    </div>
+                                            Read Online
+                                        </span>
+                                    </button>
                                 </div>
                             ))}
                         </div>
@@ -383,34 +408,11 @@ const Bareacts = () => {
                             </div>
                         </div>
 
-                        {/* Footer Actions */}
+                        {/* Footer Info */}
                         <div className="bg-gray-50 border-t border-gray-200 p-4 flex-shrink-0">
-                            <div className="flex items-center justify-between max-w-4xl mx-auto">
+                            <div className="flex items-center justify-center max-w-4xl mx-auto">
                                 <div className="text-sm text-gray-500">
-                                    {CATEGORIES[selectedAct.category]?.title} • {selectedAct.wordCount?.toLocaleString()} words
-                                </div>
-                                <div className="flex items-center gap-3">
-                                    <a
-                                        href={selectedAct.pdfPath}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="btn-secondary text-sm py-2 px-4 flex items-center gap-2"
-                                    >
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                        </svg>
-                                        Open PDF
-                                    </a>
-                                    <a
-                                        href={selectedAct.pdfPath}
-                                        download
-                                        className="btn-primary text-sm py-2 px-4 flex items-center gap-2"
-                                    >
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                        </svg>
-                                        Download
-                                    </a>
+                                    📚 {CATEGORIES[selectedAct.category]?.title} • {selectedAct.wordCount?.toLocaleString()} words
                                 </div>
                             </div>
                         </div>
