@@ -1,10 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { createRequire } from 'module';
-
-const require = createRequire(import.meta.url);
-const pdf = require('pdf-parse');
+import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -95,9 +92,25 @@ const pdfFiles = [
 
 async function extractTextFromPdf(filePath) {
     try {
-        const dataBuffer = fs.readFileSync(filePath);
-        const data = await pdf(dataBuffer);
-        return data.text;
+        const data = new Uint8Array(fs.readFileSync(filePath));
+        const doc = await getDocument({ data, useSystemFonts: true }).promise;
+
+        let fullText = '';
+        const numPages = doc.numPages;
+        console.log(`    Pages: ${numPages}`);
+
+        for (let i = 1; i <= numPages; i++) {
+            const page = await doc.getPage(i);
+            const textContent = await page.getTextContent();
+            const pageText = textContent.items.map(item => item.str).join(' ');
+            fullText += pageText + '\n\n';
+
+            if (i % 50 === 0) {
+                console.log(`    Processed page ${i}/${numPages}`);
+            }
+        }
+
+        return fullText;
     } catch (error) {
         console.error(`Error extracting text from ${filePath}:`, error.message);
         return '';
@@ -105,10 +118,10 @@ async function extractTextFromPdf(filePath) {
 }
 
 function cleanText(text) {
-    // Clean and format the extracted text
     return text
         .replace(/\r\n/g, '\n')
         .replace(/\n{3,}/g, '\n\n')
+        .replace(/\s{2,}/g, ' ')
         .trim();
 }
 
@@ -118,7 +131,7 @@ function getPreview(text, length = 500) {
 }
 
 async function main() {
-    console.log('Starting PDF extraction...\n');
+    console.log('Starting PDF extraction with pdfjs-dist...\n');
 
     const bareactsDir = path.join(__dirname, 'public', 'bareacts');
     const outputPath = path.join(__dirname, 'src', 'data', 'bareactsData.js');
@@ -143,6 +156,7 @@ async function main() {
         const fullText = await extractTextFromPdf(filePath);
         const cleanedText = cleanText(fullText);
         const preview = getPreview(cleanedText);
+        const wordCount = cleanedText.split(/\s+/).filter(w => w.length > 0).length;
 
         const actData = {
             id: pdfInfo.id,
@@ -152,13 +166,21 @@ async function main() {
             year: pdfInfo.year,
             pdfPath: `/bareacts/${pdfInfo.filename}`,
             preview: preview,
-            wordCount: cleanedText.split(/\s+/).length,
+            wordCount: wordCount,
             content: cleanedText
         };
 
         bareacts[pdfInfo.category].push(actData);
-        console.log(`  ✓ Extracted ${actData.wordCount} words`);
+        console.log(`  ✓ Extracted ${wordCount} words\n`);
     }
+
+    // Escape backticks and template literals in content for JS string
+    const escapeForJS = (obj) => {
+        return JSON.stringify(obj, null, 2)
+            .replace(/\\/g, '\\\\')
+            .replace(/`/g, '\\`')
+            .replace(/\${/g, '\\${');
+    };
 
     // Generate the JS data file
     const jsContent = `// Auto-generated file - Do not edit manually
@@ -202,12 +224,20 @@ export default BAREACTS;
         fs.mkdirSync(dataDir, { recursive: true });
     }
 
-    fs.writeFileSync(outputPath, jsContent);
+    fs.writeFileSync(outputPath, jsContent, 'utf8');
 
     console.log('\n✓ Data file generated successfully!');
     console.log(`  Location: ${outputPath}`);
     console.log(`  Total acts: ${Object.values(bareacts).flat().length}`);
-    console.log(`  Categories: ${Object.keys(bareacts).join(', ')}`);
+
+    // Print summary
+    let totalWords = 0;
+    for (const category of Object.keys(bareacts)) {
+        const categoryWords = bareacts[category].reduce((sum, act) => sum + act.wordCount, 0);
+        totalWords += categoryWords;
+        console.log(`  ${category}: ${bareacts[category].length} acts, ${categoryWords} words`);
+    }
+    console.log(`  Total words extracted: ${totalWords}`);
 }
 
 main().catch(console.error);
