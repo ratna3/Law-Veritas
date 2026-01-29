@@ -102,7 +102,33 @@ async function extractTextFromPdf(filePath) {
         for (let i = 1; i <= numPages; i++) {
             const page = await doc.getPage(i);
             const textContent = await page.getTextContent();
-            const pageText = textContent.items.map(item => item.str).join(' ');
+
+            // Sort items roughly to ensure reading order (sometimes PDF order is weird)
+            // But usually standard PDFs are okay. Let's trust default order for now but handle line breaks.
+
+            let pageText = '';
+            let lastY = -1;
+            let lastHeight = 0;
+
+            const items = textContent.items;
+
+            for (const item of items) {
+                if (lastY === -1) {
+                    pageText += item.str;
+                } else {
+                    const diffY = Math.abs(item.transform[5] - lastY);
+                    // If vertical distance is significant (e.g. > 20% of font height), it's a new line
+                    if (diffY > (item.height || 10) * 0.5) {
+                        pageText += '\n' + item.str;
+                    } else {
+                        // Same line
+                        pageText += ' ' + item.str;
+                    }
+                }
+                lastY = item.transform[5];
+                lastHeight = item.height;
+            }
+
             fullText += pageText + '\n\n';
 
             if (i % 50 === 0) {
@@ -118,11 +144,42 @@ async function extractTextFromPdf(filePath) {
 }
 
 function cleanText(text) {
-    return text
+    let cleaned = text
+        // Basic normalization
         .replace(/\r\n/g, '\n')
-        .replace(/\n{3,}/g, '\n\n')
-        .replace(/\s{2,}/g, ' ')
+
+        // Remove known garbage patterns (Kruti Dev/mangled Hindi common in Indian Gazettes)
+        // Hkkx = Bhaag (Part), [k.M = Khand (Section), etc.
+        .replace(/vlk\/kkj\.k/g, '') // EXTRAORDINARY
+        .replace(/Hkkx/g, '') // Part
+        .replace(/\[k\.M/g, '') // Khand
+        .replace(/izkf\/kdkj/g, '') // Authority
+        .replace(/la\[;k/g, '') // Number
+        .replace(/fnuka/g, '') // Date
+        .replace(/ftLVªh/g, '') // Registry
+        .replace(/lkae/g, '')
+        .replace(/vkns'k/g, '') // Order
+        .replace(/vf\/u;e/g, '') // Adhiniyam
+        .replace(/¼\s*\d+\s*½/g, '') // (Number) in Hindi parens roughly
+        .replace(/[^\x00-\x7F]+/g, '') // Remove non-ASCII characters (often residue)
+
+        // Fix spaced out headings (P R E L I M I N A R Y -> PRELIMINARY)
+        .replace(/\b([A-Z])\s+([A-Z])\s+([A-Z])\s+([A-Z])\b/g, '$1$2$3$4')
+        .replace(/\b([A-Z])\s+([A-Z])\s+([A-Z])\b/g, '$1$2$3')
+
+        // Remove Page numbers and header junk
+        .replace(/^\s*\d+\s*$/gm, '') // Lines with just numbers
+        .replace(/THE GAZETTE OF INDIA/gi, '')
+        .replace(/EXTRAORDINARY/gi, '')
+        .replace(/PART II/gi, '')
+        .replace(/Section 1/gi, '') // Often repeated in headers
+
+        // Fix Formatting
+        .replace(/\n{3,}/g, '\n\n') // Max 2 newlines
+        .replace(/[ \t]{2,}/g, ' ') // Collapse multiple spaces/tabs only, preserve newlines
         .trim();
+
+    return cleaned;
 }
 
 function getPreview(text, length = 500) {
