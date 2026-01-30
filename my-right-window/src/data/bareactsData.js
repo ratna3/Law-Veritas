@@ -124,25 +124,25 @@ export const CATEGORIES = {
   constitutional: {
     id: 'constitutional',
     title: 'Constitutional Law',
-    icon: '⚖️',
+
     description: 'Fundamental laws governing the structure and principles of the Indian government.'
   },
   criminal: {
     id: 'criminal',
     title: 'Criminal Law',
-    icon: '🔒',
+
     description: 'Laws relating to crimes, criminal procedures, and punishments.'
   },
   civil: {
     id: 'civil',
     title: 'Civil Law',
-    icon: '📋',
+
     description: 'Laws governing private rights and remedies, contracts, and property.'
   },
   family: {
     id: 'family',
     title: 'Family Law',
-    icon: '👨‍👩‍👧',
+
     description: 'Laws relating to marriage, divorce, adoption, and family matters.'
   }
 };

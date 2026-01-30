@@ -1,6 +1,20 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CATEGORIES, BAREACTS } from '../data/bareactsData';
+import { ScaleIcon, GavelIcon, FileTextIcon, UsersIcon, SearchXIcon } from '../components/Icons';
+
+const categoryIcons = {
+    constitutional: ScaleIcon,
+    criminal: GavelIcon,
+    civil: FileTextIcon,
+    family: UsersIcon
+};
+
+const CategoryIcon = ({ id, className }) => {
+    const Icon = categoryIcons[id];
+    return Icon ? <Icon className={className} /> : null;
+};
+
 
 const Bareacts = () => {
     const [activeCategory, setActiveCategory] = useState('all');
@@ -182,7 +196,9 @@ const Bareacts = () => {
                                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                     }`}
                             >
-                                <span>{category.icon}</span>
+                                <span className={`w-5 h-5 ${activeCategory === category.id ? 'text-white' : 'text-gray-500'}`}>
+                                    <CategoryIcon id={category.id} className="w-5 h-5" />
+                                </span>
                                 {category.title} ({BAREACTS[category.id]?.length || 0})
                             </button>
                         ))}
@@ -197,7 +213,9 @@ const Bareacts = () => {
                     {activeCategory !== 'all' && CATEGORIES[activeCategory] && (
                         <div className="text-center mb-12">
                             <div className="inline-flex items-center gap-2 px-4 py-1 bg-gold/10 rounded-full mb-4">
-                                <span className="text-2xl">{CATEGORIES[activeCategory].icon}</span>
+                                <span className="text-gold">
+                                    <CategoryIcon id={activeCategory} className="w-8 h-8" />
+                                </span>
                                 <span className="text-sm font-semibold text-gold uppercase tracking-wider">{CATEGORIES[activeCategory].title}</span>
                             </div>
                             <p className="text-gray-500 max-w-xl mx-auto">{CATEGORIES[activeCategory].description}</p>
@@ -221,8 +239,12 @@ const Bareacts = () => {
                                 >
                                     {/* Card Header */}
                                     <div className="flex items-start justify-between mb-4">
-                                        <div className="w-14 h-14 bg-navy/5 rounded-xl flex items-center justify-center group-hover:bg-navy/10 transition-colors">
-                                            <span className="text-2xl">{CATEGORIES[act.category]?.icon || '📜'}</span>
+                                        <div className="w-14 h-14 bg-navy/5 rounded-xl flex items-center justify-center group-hover:bg-navy/10 transition-colors text-navy">
+                                            {categoryIcons[act.category] ? (
+                                                <CategoryIcon id={act.category} className="w-8 h-8" />
+                                            ) : (
+                                                <ScaleIcon className="w-8 h-8" />
+                                            )}
                                         </div>
                                         <span className="px-3 py-1 text-xs font-semibold text-gold bg-gold/10 rounded-full">
                                             {act.year}
@@ -273,8 +295,8 @@ const Bareacts = () => {
                         </div>
                     ) : (
                         <div className="text-center py-16">
-                            <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                                <span className="text-4xl">🔍</span>
+                            <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 text-gray-400">
+                                <SearchXIcon className="w-12 h-12" />
                             </div>
                             <h3 className="text-xl font-serif font-bold text-gray-700 mb-2">No Acts Found</h3>
                             <p className="text-gray-500 mb-6">Try adjusting your search or filter criteria</p>
@@ -294,8 +316,10 @@ const Bareacts = () => {
                 <div className="max-w-7xl mx-auto">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                         {categoryList.map((category) => (
-                            <div key={category.id} className="card-elevated text-center">
-                                <span className="text-4xl block mb-3">{category.icon}</span>
+                            <div key={category.id} className="card-elevated text-center flex flex-col items-center">
+                                <span className="block mb-3 text-navy">
+                                    <CategoryIcon id={category.id} className="w-10 h-10" />
+                                </span>
                                 <div className="text-3xl font-bold text-navy mb-1">
                                     {BAREACTS[category.id]?.length || 0}
                                 </div>
@@ -361,7 +385,13 @@ const Bareacts = () => {
                         <div className="bg-gradient-to-r from-navy to-navy-dark text-white p-6 flex-shrink-0">
                             <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center gap-3">
-                                    <span className="text-3xl">{CATEGORIES[selectedAct.category]?.icon || '📜'}</span>
+                                    <span className="text-white/90">
+                                        {categoryIcons[selectedAct.category] ? (
+                                            <CategoryIcon id={selectedAct.category} className="w-8 h-8" />
+                                        ) : (
+                                            <ScaleIcon className="w-8 h-8" />
+                                        )}
+                                    </span>
                                     <div>
                                         <span className="px-2 py-0.5 text-xs font-medium bg-white/20 rounded mr-2">
                                             {selectedAct.year}
