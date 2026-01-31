@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useAuthStore } from './store';
 import Navbar from './components/layout/Navbar';
 import ProtectedRoute from './components/common/ProtectedRoute';
+import GearsLoader from './components/common/GearsLoader';
 
 // Lazy load pages for better performance
 import { Suspense, lazy } from 'react';
@@ -16,16 +17,6 @@ const AdminLogin = lazy(() => import('./pages/Admin/Login'));
 const AdminDashboard = lazy(() => import('./pages/Admin/Dashboard'));
 const BlogEditor = lazy(() => import('./pages/Admin/BlogEditor'));
 
-// Loading component
-const LoadingScreen = () => (
-  <div className="min-h-screen bg-deep-black flex items-center justify-center">
-    <div className="text-center">
-      <div className="inline-block animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-neon-green"></div>
-      <p className="mt-4 text-neon-cyan text-xl">Loading...</p>
-    </div>
-  </div>
-);
-
 function App() {
   const { initialize } = useAuthStore();
 
@@ -36,7 +27,7 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-black">
-        <Suspense fallback={<LoadingScreen />}>
+        <Suspense fallback={<GearsLoader />}>
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<><Navbar /><Home /></>} />
