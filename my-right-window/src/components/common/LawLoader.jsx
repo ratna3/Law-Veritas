@@ -23,13 +23,15 @@ const LawLoader = () => {
                         </defs>
 
                         {/* Central Pillar - Static */}
-                        <path
-                            d="M100 20 L100 180 M80 180 L120 180 M100 20 L95 25 M100 20 L105 25"
-                            stroke="url(#gold-gradient)"
-                            strokeWidth="4"
-                            strokeLinecap="round"
-                            fill="none"
-                        />
+                        {/* Central Pillar - Static */}
+                        {/* Base */}
+                        <line x1="70" y1="180" x2="130" y2="180" stroke="url(#gold-gradient)" strokeWidth="5" strokeLinecap="round" />
+                        {/* Vertical Stand */}
+                        <line x1="100" y1="20" x2="100" y2="180" stroke="url(#gold-gradient)" strokeWidth="5" strokeLinecap="round" />
+                        {/* Top Finial */}
+                        <path d="M100 20 L95 28 M100 20 L105 28" stroke="url(#gold-gradient)" strokeWidth="3" strokeLinecap="round" fill="none" />
+                        {/* Pivot Point */}
+                        <circle cx="100" cy="40" r="3" fill="#0a0f1c" stroke="url(#gold-gradient)" strokeWidth="2" />
 
                         {/* Balance Beam - Animates (Tilts) */}
                         <g className="origin-[100px_40px] animate-balance">

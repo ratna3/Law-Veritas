@@ -12,6 +12,13 @@ export default defineConfig({
     include: ['react', 'react-dom', 'react/jsx-runtime', 'react/jsx-dev-runtime'],
   },
   build: {
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 5000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          bareactsData: ['src/data/bareactsData.js'],
+        },
+      },
+    },
   },
 })
