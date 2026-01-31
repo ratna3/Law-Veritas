@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useAuthStore } from './store';
 import Navbar from './components/layout/Navbar';
 import ProtectedRoute from './components/common/ProtectedRoute';
-import GearsLoader from './components/common/GearsLoader';
+import LawLoader from './components/common/LawLoader';
 
 // Lazy load pages for better performance
 import { Suspense, lazy } from 'react';
@@ -27,7 +27,7 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-black">
-        <Suspense fallback={<GearsLoader />}>
+        <Suspense fallback={<LawLoader />}>
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<><Navbar /><Home /></>} />
