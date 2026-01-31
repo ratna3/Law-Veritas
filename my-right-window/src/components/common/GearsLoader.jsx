@@ -1,9 +1,10 @@
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, Center, Html } from '@react-three/drei';
 import { useRef, Suspense } from 'react';
+import gearsModel from '../../assets/gears.glb?url';
 
 const Model = () => {
-    const { scene } = useGLTF('/models/gears.glb');
+    const { scene } = useGLTF(gearsModel);
     const ref = useRef();
 
     useFrame((state, delta) => {
@@ -49,6 +50,6 @@ const GearsLoader = () => {
 };
 
 // Pre-load the model
-useGLTF.preload('/models/gears.glb');
+useGLTF.preload(gearsModel);
 
 export default GearsLoader;
