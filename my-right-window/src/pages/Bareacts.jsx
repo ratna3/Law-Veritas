@@ -148,7 +148,26 @@ const Bareacts = () => {
             /^(SCHEDULE|PREAMBLE|APPENDIX)/i,
         ];
 
-        lines.forEach(line => {
+        // Logic to skip the internal "CONTENTS" section if present
+        let startIndex = 0;
+        // Check if there is an explicit CONTENTS section
+        const hasContentsSection = lines.some(line => line.trim().toUpperCase() === 'CONTENTS');
+
+        if (hasContentsSection && selectedAct?.title) {
+            // If CONTENTS exists, look for the second occurrence of the Title (start of body)
+            // matching loosely to account for formatting (e.g., "THE CONSTITUTION OF INDIA")
+            const titleUpper = selectedAct.title.toUpperCase();
+            // Start searching after a reasonable buffer (e.g., 20 lines) to avoid the first title occurrence
+            const bodyStartIndex = lines.findIndex((line, idx) =>
+                idx > 20 && line.toUpperCase().includes(titleUpper)
+            );
+
+            if (bodyStartIndex !== -1) {
+                startIndex = bodyStartIndex;
+            }
+        }
+
+        lines.slice(startIndex).forEach(line => {
             const trimmed = line.trim();
             if (!trimmed) return;
 
