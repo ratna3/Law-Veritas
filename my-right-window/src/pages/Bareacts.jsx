@@ -233,12 +233,12 @@ const Bareacts = () => {
             </section>
 
             {/* Category Tabs */}
-            <section className="py-8 px-4 bg-white border-b border-gray-100 sticky top-20 z-40">
+            <section className="py-4 md:py-8 px-4 bg-white border-b border-gray-100 sticky top-16 md:top-20 z-40 shadow-sm md:shadow-none">
                 <div className="max-w-7xl mx-auto">
-                    <div className="flex flex-wrap justify-center gap-3">
+                    <div className="flex flex-nowrap md:flex-wrap overflow-x-auto md:overflow-visible justify-start md:justify-center gap-3 pb-2 md:pb-0 scrollbar-hide">
                         <button
                             onClick={() => setActiveCategory('all')}
-                            className={`px-6 py-2.5 rounded-full font-medium text-sm transition-all duration-300 ${activeCategory === 'all'
+                            className={`px-6 py-2.5 rounded-full font-medium text-sm whitespace-nowrap transition-all duration-300 ${activeCategory === 'all'
                                 ? 'bg-navy text-white shadow-md'
                                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                 }`}
@@ -249,7 +249,7 @@ const Bareacts = () => {
                             <button
                                 key={category.id}
                                 onClick={() => setActiveCategory(category.id)}
-                                className={`px-6 py-2.5 rounded-full font-medium text-sm transition-all duration-300 flex items-center gap-2 ${activeCategory === category.id
+                                className={`px-6 py-2.5 rounded-full font-medium text-sm whitespace-nowrap transition-all duration-300 flex items-center gap-2 ${activeCategory === category.id
                                     ? 'bg-navy text-white shadow-md'
                                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                     }`}
