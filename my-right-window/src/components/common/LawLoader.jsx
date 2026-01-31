@@ -24,7 +24,7 @@ const LawLoader = () => {
 
                         {/* Central Pillar - Static */}
                         <path
-                            d="M100 20 L100 160 M80 180 L120 180 M100 20 L95 25 M100 20 L105 25"
+                            d="M100 20 L100 180 M80 180 L120 180 M100 20 L95 25 M100 20 L105 25"
                             stroke="url(#gold-gradient)"
                             strokeWidth="4"
                             strokeLinecap="round"
