@@ -1,24 +1,35 @@
-import { Canvas, useFrame } from '@react-three/fiber';
-import { useGLTF, Center, Html } from '@react-three/drei';
-import { useRef, Suspense } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { useGLTF, Center, Float, Environment } from '@react-three/drei';
+import { useEffect, Suspense } from 'react';
+import * as THREE from 'three';
 import gearsModel from '../../assets/gears.glb?url';
 
 const Model = () => {
     const { scene } = useGLTF(gearsModel);
-    const ref = useRef();
 
-    useFrame((state, delta) => {
-        if (ref.current) {
-            ref.current.rotation.y += delta * 0.5; // Rotate on Y axis
-        }
-    });
+    useEffect(() => {
+        // Apply gold/metallic material to all meshes
+        scene.traverse((child) => {
+            if (child.isMesh) {
+                child.material = new THREE.MeshStandardMaterial({
+                    color: "#bf953f", // Gold color
+                    metalness: 0.8,
+                    roughness: 0.2,
+                    envMapIntensity: 1
+                });
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+        });
+    }, [scene]);
 
     return (
-        <primitive
-            ref={ref}
-            object={scene}
-            scale={2}
-        />
+        <Float speed={2} rotationIntensity={0.2} floatIntensity={0.5}>
+            <primitive
+                object={scene}
+                scale={2}
+            />
+        </Float>
     );
 };
 
@@ -30,6 +41,7 @@ const GearsLoader = () => {
                     <ambientLight intensity={0.5} />
                     <pointLight position={[10, 10, 10]} intensity={1} />
                     <spotLight position={[-10, -10, -10]} angle={0.15} penumbra={1} />
+                    <Environment preset="city" />
                     <Suspense fallback={null}>
                         <Center>
                             <Model />
