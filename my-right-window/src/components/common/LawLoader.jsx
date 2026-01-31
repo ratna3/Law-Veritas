@@ -22,39 +22,41 @@ const LawLoader = () => {
                             </linearGradient>
                         </defs>
 
-                        {/* Central Pillar - Static */}
-                        {/* Central Pillar - Static */}
-                        {/* Base */}
-                        <line x1="70" y1="180" x2="130" y2="180" stroke="url(#gold-gradient)" strokeWidth="5" strokeLinecap="round" />
-                        {/* Vertical Stand */}
-                        <line x1="100" y1="20" x2="100" y2="180" stroke="url(#gold-gradient)" strokeWidth="5" strokeLinecap="round" />
-                        {/* Top Finial */}
-                        <path d="M100 20 L95 28 M100 20 L105 28" stroke="url(#gold-gradient)" strokeWidth="3" strokeLinecap="round" fill="none" />
-                        {/* Pivot Point */}
-                        <circle cx="100" cy="40" r="3" fill="#0a0f1c" stroke="url(#gold-gradient)" strokeWidth="2" />
+                        {/* 1. Base Stand (Static) */}
+                        <g id="base-structure">
+                            {/* Bottom horizontal base */}
+                            <line x1="70" y1="180" x2="130" y2="180" stroke="url(#gold-gradient)" strokeWidth="4" strokeLinecap="round" />
+                            {/* Central vertical pillar - connected to base */}
+                            <line x1="100" y1="20" x2="100" y2="180" stroke="url(#gold-gradient)" strokeWidth="4" strokeLinecap="round" />
+                            {/* Top Finial (Decorative tip) */}
+                            <circle cx="100" cy="20" r="4" fill="url(#gold-gradient)" />
+                            {/* Pivot Point (Where beam rotates) */}
+                            <circle cx="100" cy="40" r="3" fill="#0a0f1c" stroke="url(#gold-gradient)" strokeWidth="2" />
+                        </g>
 
-                        {/* Balance Beam - Animates (Tilts) */}
+                        {/* 2. Balancing Mechanism (Animated) */}
                         <g className="origin-[100px_40px] animate-balance">
-                            {/* The Beam */}
+                            {/* The Horizontal Beam */}
                             <line x1="40" y1="40" x2="160" y2="40" stroke="url(#gold-gradient)" strokeWidth="4" strokeLinecap="round" />
 
-                            {/* Left Scale */}
+                            {/* Left Scale Assembly */}
                             <g className="origin-[40px_40px] animate-scale-counter-left">
-                                <line x1="40" y1="40" x2="20" y2="100" stroke="url(#gold-gradient)" strokeWidth="1.5" strokeDasharray="3 3" />
-                                <line x1="40" y1="40" x2="60" y2="100" stroke="url(#gold-gradient)" strokeWidth="1.5" strokeDasharray="3 3" />
+                                {/* Chains */}
+                                <line x1="40" y1="40" x2="20" y2="100" stroke="url(#gold-gradient)" strokeWidth="1" strokeDasharray="3 2" />
+                                <line x1="40" y1="40" x2="60" y2="100" stroke="url(#gold-gradient)" strokeWidth="1" strokeDasharray="3 2" />
+                                {/* Bowl */}
                                 <path d="M20 100 Q40 130 60 100 Z" fill="rgba(191,149,63,0.1)" stroke="url(#gold-gradient)" strokeWidth="2" />
                             </g>
 
-                            {/* Right Scale */}
+                            {/* Right Scale Assembly */}
                             <g className="origin-[160px_40px] animate-scale-counter-right">
-                                <line x1="160" y1="40" x2="140" y2="100" stroke="url(#gold-gradient)" strokeWidth="1.5" strokeDasharray="3 3" />
-                                <line x1="160" y1="40" x2="180" y2="100" stroke="url(#gold-gradient)" strokeWidth="1.5" strokeDasharray="3 3" />
+                                {/* Chains */}
+                                <line x1="160" y1="40" x2="140" y2="100" stroke="url(#gold-gradient)" strokeWidth="1" strokeDasharray="3 2" />
+                                <line x1="160" y1="40" x2="180" y2="100" stroke="url(#gold-gradient)" strokeWidth="1" strokeDasharray="3 2" />
+                                {/* Bowl */}
                                 <path d="M140 100 Q160 130 180 100 Z" fill="rgba(191,149,63,0.1)" stroke="url(#gold-gradient)" strokeWidth="2" />
                             </g>
                         </g>
-
-                        {/* Top decorative finial */}
-                        <circle cx="100" cy="20" r="4" fill="url(#gold-gradient)" />
                     </svg>
                 </div>
             </div>
