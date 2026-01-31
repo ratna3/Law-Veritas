@@ -1,13 +1,14 @@
-import { Canvas } from '@react-three/fiber';
-import { useGLTF, Center, Float, Environment } from '@react-three/drei';
-import { useEffect, Suspense } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { useGLTF, Center, Environment } from '@react-three/drei';
+import React, { useEffect, Suspense } from 'react';
 import * as THREE from 'three';
 import gearsModel from '../../assets/gears.glb?url';
 
 const Model = () => {
     const { scene } = useGLTF(gearsModel);
+    const modelRef = React.useRef();
 
-    useEffect(() => {
+    React.useEffect(() => {
         // Apply gold/metallic material to all meshes
         scene.traverse((child) => {
             if (child.isMesh) {
@@ -23,13 +24,18 @@ const Model = () => {
         });
     }, [scene]);
 
+    useFrame((state, delta) => {
+        if (modelRef.current) {
+            modelRef.current.rotation.y += delta * 0.5;
+        }
+    });
+
     return (
-        <Float speed={2} rotationIntensity={0.2} floatIntensity={0.5}>
-            <primitive
-                object={scene}
-                scale={2}
-            />
-        </Float>
+        <primitive
+            ref={modelRef}
+            object={scene}
+            scale={1.2}
+        />
     );
 };
 
