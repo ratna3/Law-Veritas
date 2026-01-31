@@ -84,7 +84,7 @@ const BlogList = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white pt-24 pb-16">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white pt-20 md:pt-28 pb-16">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
@@ -115,11 +115,10 @@ const BlogList = () => {
                 <button
                   key={tag}
                   onClick={() => handleTagClick(tag)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                    selectedTag === tag
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedTag === tag
                       ? 'bg-navy text-white shadow-elegant'
                       : 'bg-white text-gray-600 border border-gray-200 hover:border-navy hover:text-navy'
-                  }`}
+                    }`}
                 >
                   {tag}
                 </button>

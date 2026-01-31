@@ -63,7 +63,9 @@ const Home = () => {
           }}></div>
         </div>
 
-        <div ref={heroRef} className="relative z-10 text-center max-w-5xl mx-auto px-4 pt-28">
+        </div>
+
+        <div ref={heroRef} className="relative z-10 text-center max-w-5xl mx-auto px-4 pt-24 md:pt-32">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-navy/5 to-gold/5 border border-navy/10 rounded-full mb-10 animate-slideUp shadow-sm">
             <span className="w-2 h-2 bg-gold rounded-full animate-pulse"></span>
@@ -120,285 +122,285 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-float">
-          <div className="w-8 h-12 border-2 border-navy/30 rounded-full flex items-start justify-center p-2">
-            <div className="w-1.5 h-3 bg-navy/40 rounded-full animate-bounce"></div>
-          </div>
-        </div>
-      </section>
+        {/* Scroll Indicator */ }
+  <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-float">
+    <div className="w-8 h-12 border-2 border-navy/30 rounded-full flex items-start justify-center p-2">
+      <div className="w-1.5 h-3 bg-navy/40 rounded-full animate-bounce"></div>
+    </div>
+  </div>
+      </section >
 
-      {/* Services Section */}
-      <section className="py-24 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="section-title">Our Expertise</h2>
-            <div className="divider-gold"></div>
-            <p className="section-subtitle">
-              Comprehensive legal services tailored to meet your unique needs
-            </p>
-          </div>
+  {/* Services Section */ }
+  < section className = "py-16 md:py-24 px-4 bg-white" >
+    <div className="max-w-7xl mx-auto">
+      <div className="text-center mb-16">
+        <h2 className="section-title">Our Expertise</h2>
+        <div className="divider-gold"></div>
+        <p className="section-subtitle">
+          Comprehensive legal services tailored to meet your unique needs
+        </p>
+      </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {services.map((service, index) => (
-              <div
-                key={index}
-                className="card-elevated text-center group cursor-pointer"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="w-16 h-16 bg-navy/5 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-navy/10 transition-colors">
-                  <span className="text-3xl">{service.icon}</span>
-                </div>
-                <h3 className="text-xl font-serif font-bold text-navy mb-3">{service.title}</h3>
-                <p className="text-gray-500">{service.desc}</p>
-              </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {services.map((service, index) => (
+          <div
+            key={index}
+            className="card-elevated text-center group cursor-pointer"
+            style={{ animationDelay: `${index * 0.1}s` }}
+          >
+            <div className="w-16 h-16 bg-navy/5 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-navy/10 transition-colors">
+              <span className="text-3xl">{service.icon}</span>
+            </div>
+            <h3 className="text-xl font-serif font-bold text-navy mb-3">{service.title}</h3>
+            <p className="text-gray-500">{service.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+      </section >
+
+  {/* Bare Acts Section */ }
+  < section className = "py-16 md:py-24 px-4 bg-gradient-to-b from-white to-slate-50" >
+    <div className="max-w-7xl mx-auto">
+      <div className="text-center mb-16">
+        <h2 className="section-title">Bare Acts</h2>
+        <div className="divider-gold"></div>
+        <p className="section-subtitle">
+          Your comprehensive legal reference library
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        {/* Content Side */}
+        <div className="order-2 lg:order-1">
+          <div className="inline-flex items-center gap-2 px-4 py-1 bg-gold/10 rounded-full mb-6">
+            <span className="text-sm font-semibold text-gold uppercase tracking-wider">Legal Documents</span>
+          </div>
+          <h3 className="text-3xl md:text-4xl font-serif font-bold text-navy mb-6">
+            Access Authentic Legislative Texts
+          </h3>
+          <p className="text-gray-600 text-lg mb-6 leading-relaxed">
+            Explore our curated collection of Indian Bare Acts including Constitutional Laws, Civil Laws,
+            Criminal Laws, and Commercial Legislations. Your one-stop destination for authentic legal documents.
+          </p>
+          <div className="flex flex-wrap gap-3 mb-8">
+            {['Constitution', 'IPC', 'CPC', 'CrPC', 'Evidence Act', 'Contract Act'].map((tag, idx) => (
+              <span key={idx} className="px-4 py-2 text-sm font-medium text-navy bg-navy/5 rounded-full border border-navy/10 hover:bg-navy/10 transition-colors cursor-pointer">
+                {tag}
+              </span>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Bare Acts Section */}
-      <section className="py-24 px-4 bg-gradient-to-b from-white to-slate-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="section-title">Bare Acts</h2>
-            <div className="divider-gold"></div>
-            <p className="section-subtitle">
-              Your comprehensive legal reference library
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            {/* Content Side */}
-            <div className="order-2 lg:order-1">
-              <div className="inline-flex items-center gap-2 px-4 py-1 bg-gold/10 rounded-full mb-6">
-                <span className="text-sm font-semibold text-gold uppercase tracking-wider">Legal Documents</span>
-              </div>
-              <h3 className="text-3xl md:text-4xl font-serif font-bold text-navy mb-6">
-                Access Authentic Legislative Texts
-              </h3>
-              <p className="text-gray-600 text-lg mb-6 leading-relaxed">
-                Explore our curated collection of Indian Bare Acts including Constitutional Laws, Civil Laws,
-                Criminal Laws, and Commercial Legislations. Your one-stop destination for authentic legal documents.
-              </p>
-              <div className="flex flex-wrap gap-3 mb-8">
-                {['Constitution', 'IPC', 'CPC', 'CrPC', 'Evidence Act', 'Contract Act'].map((tag, idx) => (
-                  <span key={idx} className="px-4 py-2 text-sm font-medium text-navy bg-navy/5 rounded-full border border-navy/10 hover:bg-navy/10 transition-colors cursor-pointer">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <Link to="/bareacts" className="btn-primary group inline-flex items-center">
-                Explore Bare Acts
-                <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </div>
-
-            {/* Visual Side */}
-            <div className="order-1 lg:order-2">
-              <div className="relative">
-                <div className="card-elevated p-8 bg-gradient-to-br from-navy/5 to-gold/5 border-2 border-navy/10">
-                  <div className="grid grid-cols-2 gap-4">
-                    {[
-                      { icon: '⚖️', title: 'Constitutional', count: 'Coming Soon' },
-                      { icon: '📋', title: 'Civil Laws', count: 'Coming Soon' },
-                      { icon: '🏛️', title: 'Criminal Laws', count: 'Coming Soon' },
-                      { icon: '💼', title: 'Commercial', count: 'Coming Soon' },
-                    ].map((item, idx) => (
-                      <div key={idx} className="p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
-                        <span className="text-3xl block mb-2">{item.icon}</span>
-                        <h4 className="font-semibold text-navy text-sm">{item.title}</h4>
-                        <p className="text-xs text-gray-400">{item.count}</p>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-6 p-4 bg-gold/10 rounded-xl text-center">
-                    <span className="text-gold font-medium">📚 More acts coming soon!</span>
-                  </div>
-                </div>
-                {/* Decorative elements */}
-                <div className="absolute -top-4 -right-4 w-24 h-24 bg-gold/10 rounded-full blur-2xl -z-10"></div>
-                <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-navy/10 rounded-full blur-2xl -z-10"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3D Models Section */}
-      <section id="principles" className="py-24 px-4 bg-gradient-to-b from-slate-50 to-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="section-title">Our Core Values</h2>
-            <div className="divider-gold"></div>
-            <p className="section-subtitle">
-              The pillars that guide our practice and define our commitment to you
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {models.map((model, index) => (
-              <div key={index} className="flex flex-col items-center group">
-                {/* 3D Model Container */}
-                <div className="w-full h-80 md:h-96 mb-8 rounded-2xl overflow-hidden bg-gradient-to-br from-slate-100 to-white border border-gray-200 shadow-elegant group-hover:shadow-elegant-lg transition-all duration-500">
-                  <ModelScene
-                    modelPath={model.path}
-                    scale={model.scale}
-                    cameraPosition={[0, 0, 5]}
-                  />
-                </div>
-
-                {/* Title Badge */}
-                <div className="inline-flex items-center gap-2 px-4 py-1 bg-gold/10 rounded-full mb-4">
-                  <span className="text-sm font-semibold text-gold uppercase tracking-wider">{model.title}</span>
-                </div>
-
-                {/* Tagline */}
-                <p className="text-center text-lg text-gray-600 leading-relaxed max-w-sm px-4">
-                  {model.tagline}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Insights Section */}
-      <section id="featured" className="py-24 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="section-title">Featured Insights</h2>
-            <div className="divider-gold"></div>
-            <p className="section-subtitle">
-              Stay informed with our latest legal perspectives and analysis
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredBlogs.length > 0 ? (
-              featuredBlogs.map((blog) => (
-                <div key={blog.id} className="card group hover:border-gold/30 transition-all duration-300">
-                  <div className="h-48 bg-gradient-to-br from-slate-100 to-slate-50 rounded-xl mb-6 flex items-center justify-center overflow-hidden">
-                    {blog.images && blog.images.length > 0 ? (
-                      <img
-                        src={blog.images[0]}
-                        alt={blog.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                    ) : (
-                      <div className="text-6xl text-navy/20 group-hover:scale-110 transition-transform duration-500">⚖️</div>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-2 mb-3 flex-wrap">
-                    {blog.tags && blog.tags.slice(0, 2).map((tag, idx) => (
-                      <span key={idx} className="px-3 py-1 text-xs font-semibold text-gold bg-gold/10 rounded-full">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <h3 className="text-xl font-serif font-bold text-gray-900 mb-3 group-hover:text-navy transition-colors line-clamp-2">
-                    {blog.title}
-                  </h3>
-                  <p className="text-gray-500 mb-6 leading-relaxed line-clamp-3">
-                    {blog.content.substring(0, 150).replace(/[#*`]/g, '')}...
-                  </p>
-                  <Link to={`/blog/${blog.slug}`} className="inline-flex items-center text-navy font-semibold hover:text-gold transition-colors group/link">
-                    Read Article
-                    <svg className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </Link>
-                </div>
-              ))
-            ) : (
-              // Fallback placeholder cards when no featured blogs
-              [1, 2, 3].map((item) => (
-                <div key={item} className="card group hover:border-gold/30 transition-all duration-300">
-                  <div className="h-48 bg-gradient-to-br from-slate-100 to-slate-50 rounded-xl mb-6 flex items-center justify-center overflow-hidden">
-                    <div className="text-6xl text-navy/20 group-hover:scale-110 transition-transform duration-500">⚖️</div>
-                  </div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="px-3 py-1 text-xs font-semibold text-gold bg-gold/10 rounded-full">Legal Insight</span>
-                  </div>
-                  <h3 className="text-xl font-serif font-bold text-gray-900 mb-3 group-hover:text-navy transition-colors">
-                    Coming Soon
-                  </h3>
-                  <p className="text-gray-500 mb-6 leading-relaxed">
-                    Featured articles will appear here. Check back soon for legal insights and analysis.
-                  </p>
-                  <Link to="/blogs" className="inline-flex items-center text-navy font-semibold hover:text-gold transition-colors group/link">
-                    View All Articles
-                    <svg className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </Link>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section className="py-24 px-4 bg-navy text-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">
-            About Law-gically Yours
-          </h2>
-          <div className="w-24 h-1 bg-gold mx-auto my-8 rounded-full"></div>
-          <p className="text-lg text-gray-300 mb-6 leading-relaxed">
-            Your trusted legal partner, committed to delivering exceptional counsel with integrity and expertise.
-            We navigate complex legal challenges with strategic precision and unwavering dedication.
-          </p>
-          <p className="text-lg text-gray-400 leading-relaxed">
-            Through our commitment to justice and ethical practice, we ensure every client receives the representation
-            they deserve. Our approach combines deep legal knowledge with compassionate understanding.
-          </p>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 px-4 bg-gradient-to-b from-slate-50 to-white">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4">
-            Stay Updated with Our Insights
-          </h2>
-          <div className="divider-gold"></div>
-          <p className="text-gray-500 mb-10 text-lg">
-            Join our community and never miss important legal updates and analysis
-          </p>
-          <Link to="/blogs" className="btn-gold inline-flex items-center text-lg px-8 py-4">
-            View All Articles
-            <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <Link to="/bareacts" className="btn-primary group inline-flex items-center">
+            Explore Bare Acts
+            <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </Link>
         </div>
-      </section>
 
-      {/* Footer */}
-      <footer className="py-12 px-4 bg-navy-dark text-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-3">
-              <span className="text-2xl font-serif font-bold">Law-gically Yours</span>
-              <span className="text-gray-400 text-sm">| Legal Excellence</span>
+        {/* Visual Side */}
+        <div className="order-1 lg:order-2">
+          <div className="relative">
+            <div className="card-elevated p-8 bg-gradient-to-br from-navy/5 to-gold/5 border-2 border-navy/10">
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { icon: '⚖️', title: 'Constitutional', count: 'Coming Soon' },
+                  { icon: '📋', title: 'Civil Laws', count: 'Coming Soon' },
+                  { icon: '🏛️', title: 'Criminal Laws', count: 'Coming Soon' },
+                  { icon: '💼', title: 'Commercial', count: 'Coming Soon' },
+                ].map((item, idx) => (
+                  <div key={idx} className="p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <span className="text-3xl block mb-2">{item.icon}</span>
+                    <h4 className="font-semibold text-navy text-sm">{item.title}</h4>
+                    <p className="text-xs text-gray-400">{item.count}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 p-4 bg-gold/10 rounded-xl text-center">
+                <span className="text-gold font-medium">📚 More acts coming soon!</span>
+              </div>
             </div>
-            <div className="flex items-center gap-6 text-gray-400 text-sm">
-              <Link to="/" className="hover:text-white transition-colors">Home</Link>
-              <Link to="/blogs" className="hover:text-white transition-colors">Insights</Link>
-              <Link to="/bareacts" className="hover:text-white transition-colors">Bare Acts</Link>
-              <Link to="/admin/login" className="hover:text-white transition-colors">Admin</Link>
-            </div>
-            <p className="text-gray-500 text-sm">
-              © 2025 Law-gically Yours. All rights reserved.
-            </p>
+            {/* Decorative elements */}
+            <div className="absolute -top-4 -right-4 w-24 h-24 bg-gold/10 rounded-full blur-2xl -z-10"></div>
+            <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-navy/10 rounded-full blur-2xl -z-10"></div>
           </div>
         </div>
-      </footer>
+      </div>
     </div>
+      </section >
+
+  {/* 3D Models Section */ }
+  < section id = "principles" className = "py-16 md:py-24 px-4 bg-gradient-to-b from-slate-50 to-white" >
+    <div className="max-w-7xl mx-auto">
+      <div className="text-center mb-16">
+        <h2 className="section-title">Our Core Values</h2>
+        <div className="divider-gold"></div>
+        <p className="section-subtitle">
+          The pillars that guide our practice and define our commitment to you
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+        {models.map((model, index) => (
+          <div key={index} className="flex flex-col items-center group">
+            {/* 3D Model Container */}
+            <div className="w-full h-80 md:h-96 mb-8 rounded-2xl overflow-hidden bg-gradient-to-br from-slate-100 to-white border border-gray-200 shadow-elegant group-hover:shadow-elegant-lg transition-all duration-500">
+              <ModelScene
+                modelPath={model.path}
+                scale={model.scale}
+                cameraPosition={[0, 0, 5]}
+              />
+            </div>
+
+            {/* Title Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-1 bg-gold/10 rounded-full mb-4">
+              <span className="text-sm font-semibold text-gold uppercase tracking-wider">{model.title}</span>
+            </div>
+
+            {/* Tagline */}
+            <p className="text-center text-lg text-gray-600 leading-relaxed max-w-sm px-4">
+              {model.tagline}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+      </section >
+
+  {/* Featured Insights Section */ }
+  < section id = "featured" className = "py-16 md:py-24 px-4 bg-white" >
+    <div className="max-w-7xl mx-auto">
+      <div className="text-center mb-16">
+        <h2 className="section-title">Featured Insights</h2>
+        <div className="divider-gold"></div>
+        <p className="section-subtitle">
+          Stay informed with our latest legal perspectives and analysis
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {featuredBlogs.length > 0 ? (
+          featuredBlogs.map((blog) => (
+            <div key={blog.id} className="card group hover:border-gold/30 transition-all duration-300">
+              <div className="h-48 bg-gradient-to-br from-slate-100 to-slate-50 rounded-xl mb-6 flex items-center justify-center overflow-hidden">
+                {blog.images && blog.images.length > 0 ? (
+                  <img
+                    src={blog.images[0]}
+                    alt={blog.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                ) : (
+                  <div className="text-6xl text-navy/20 group-hover:scale-110 transition-transform duration-500">⚖️</div>
+                )}
+              </div>
+              <div className="flex items-center gap-2 mb-3 flex-wrap">
+                {blog.tags && blog.tags.slice(0, 2).map((tag, idx) => (
+                  <span key={idx} className="px-3 py-1 text-xs font-semibold text-gold bg-gold/10 rounded-full">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <h3 className="text-xl font-serif font-bold text-gray-900 mb-3 group-hover:text-navy transition-colors line-clamp-2">
+                {blog.title}
+              </h3>
+              <p className="text-gray-500 mb-6 leading-relaxed line-clamp-3">
+                {blog.content.substring(0, 150).replace(/[#*`]/g, '')}...
+              </p>
+              <Link to={`/blog/${blog.slug}`} className="inline-flex items-center text-navy font-semibold hover:text-gold transition-colors group/link">
+                Read Article
+                <svg className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </div>
+          ))
+        ) : (
+          // Fallback placeholder cards when no featured blogs
+          [1, 2, 3].map((item) => (
+            <div key={item} className="card group hover:border-gold/30 transition-all duration-300">
+              <div className="h-48 bg-gradient-to-br from-slate-100 to-slate-50 rounded-xl mb-6 flex items-center justify-center overflow-hidden">
+                <div className="text-6xl text-navy/20 group-hover:scale-110 transition-transform duration-500">⚖️</div>
+              </div>
+              <div className="flex items-center gap-2 mb-3">
+                <span className="px-3 py-1 text-xs font-semibold text-gold bg-gold/10 rounded-full">Legal Insight</span>
+              </div>
+              <h3 className="text-xl font-serif font-bold text-gray-900 mb-3 group-hover:text-navy transition-colors">
+                Coming Soon
+              </h3>
+              <p className="text-gray-500 mb-6 leading-relaxed">
+                Featured articles will appear here. Check back soon for legal insights and analysis.
+              </p>
+              <Link to="/blogs" className="inline-flex items-center text-navy font-semibold hover:text-gold transition-colors group/link">
+                View All Articles
+                <svg className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+      </section >
+
+  {/* About Section */ }
+  < section className = "py-16 md:py-24 px-4 bg-navy text-white" >
+    <div className="max-w-4xl mx-auto text-center">
+      <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">
+        About Law-gically Yours
+      </h2>
+      <div className="w-24 h-1 bg-gold mx-auto my-8 rounded-full"></div>
+      <p className="text-lg text-gray-300 mb-6 leading-relaxed">
+        Your trusted legal partner, committed to delivering exceptional counsel with integrity and expertise.
+        We navigate complex legal challenges with strategic precision and unwavering dedication.
+      </p>
+      <p className="text-lg text-gray-400 leading-relaxed">
+        Through our commitment to justice and ethical practice, we ensure every client receives the representation
+        they deserve. Our approach combines deep legal knowledge with compassionate understanding.
+      </p>
+    </div>
+      </section >
+
+  {/* CTA Section */ }
+  < section className = "py-16 md:py-24 px-4 bg-gradient-to-b from-slate-50 to-white" >
+    <div className="max-w-3xl mx-auto text-center">
+      <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4">
+        Stay Updated with Our Insights
+      </h2>
+      <div className="divider-gold"></div>
+      <p className="text-gray-500 mb-10 text-lg">
+        Join our community and never miss important legal updates and analysis
+      </p>
+      <Link to="/blogs" className="btn-gold inline-flex items-center text-lg px-8 py-4">
+        View All Articles
+        <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </Link>
+    </div>
+      </section >
+
+  {/* Footer */ }
+  < footer className = "py-12 px-4 bg-navy-dark text-white" >
+    <div className="max-w-7xl mx-auto">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex items-center gap-3">
+          <span className="text-2xl font-serif font-bold">Law-gically Yours</span>
+          <span className="text-gray-400 text-sm">| Legal Excellence</span>
+        </div>
+        <div className="flex items-center gap-6 text-gray-400 text-sm">
+          <Link to="/" className="hover:text-white transition-colors">Home</Link>
+          <Link to="/blogs" className="hover:text-white transition-colors">Insights</Link>
+          <Link to="/bareacts" className="hover:text-white transition-colors">Bare Acts</Link>
+          <Link to="/admin/login" className="hover:text-white transition-colors">Admin</Link>
+        </div>
+        <p className="text-gray-500 text-sm">
+          © 2025 Law-gically Yours. All rights reserved.
+        </p>
+      </div>
+    </div>
+      </footer >
+    </div >
   );
 };
 

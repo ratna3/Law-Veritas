@@ -31,16 +31,16 @@ export default function Navbar() {
         }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
             <div className="flex items-center">
-              <svg className="w-10 h-10 text-navy" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg className="w-8 h-8 md:w-10 md:h-10 text-navy" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="2" fill="none" />
                 <path d="M20 8L20 32M12 20H28M14 14L26 26M26 14L14 26" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
               <div className="ml-3">
-                <span className="text-2xl font-serif font-bold text-navy">Law-gically Yours</span>
+                <span className="text-xl md:text-2xl font-serif font-bold text-navy">Law-gically Yours</span>
                 <span className={`hidden sm:block text-xs tracking-wider ${isScrolled ? 'text-gray-500' : 'text-gray-600'}`}>
                   LEGAL EXCELLENCE
                 </span>
