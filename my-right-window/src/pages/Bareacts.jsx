@@ -57,7 +57,19 @@ const Bareacts = () => {
             /^(SCHEDULE|PREAMBLE|APPENDIX)/i,
         ];
 
+        // Slugify helper
+        const slugify = (text) => {
+            return text
+                .toString()
+                .toLowerCase()
+                .trim()
+                .replace(/\s+/g, '-')     // Replace spaces with -
+                .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+                .replace(/\-\-+/g, '-');  // Replace multiple - with single -
+        };
+
         // Split content into lines for better formatting
+
         const lines = content.split(/\n/);
         const elements = [];
         let currentParagraph = [];
@@ -89,8 +101,9 @@ const Bareacts = () => {
 
             if (isHeading || isAllCaps) {
                 flushParagraph();
+                const id = slugify(trimmedLine);
                 elements.push(
-                    <h3 key={elements.length} className="text-lg font-bold text-navy mt-8 mb-4 border-b border-gray-200 pb-2">
+                    <h3 id={id} key={elements.length} className="text-lg font-bold text-navy mt-8 mb-4 border-b border-gray-200 pb-2 scroll-mt-24">
                         {trimmedLine}
                     </h3>
                 );
@@ -428,13 +441,65 @@ const Bareacts = () => {
                             </div>
                         </div>
 
-                        {/* Content */}
-                        <div className="flex-1 overflow-y-auto p-6 md:p-8">
-                            <div className="max-w-4xl mx-auto prose prose-lg">
-                                {contentSearchQuery.trim()
-                                    ? getHighlightedContent(selectedAct.content, contentSearchQuery)
-                                    : formatContent(selectedAct.content)
-                                }
+                        {/* Content & TOC Container */}
+                        <div className="flex-1 overflow-hidden flex flex-col md:flex-row">
+                            {/* Table of Contents (Desktop) */}
+                            <div className="hidden md:block w-64 bg-gray-50 border-r border-gray-200 overflow-y-auto p-4 flex-shrink-0">
+                                <h3 className="font-bold text-navy mb-4 text-sm uppercase tracking-wide">Table of Contents</h3>
+                                <div className="space-y-1">
+                                    {(() => {
+                                        const headings = [];
+                                        const lines = selectedAct.content ? selectedAct.content.split(/\n/) : [];
+                                        const headingPatterns = [
+                                            /^(PART [IVXLCDM]+)/i,
+                                            /^(CHAPTER [IVXLCDM0-9]+)/i,
+                                            /^(Article \d+)/i,
+                                            /^(Section \d+)/i,
+                                            /^(\d+\.\s)/,
+                                            /^(SCHEDULE|PREAMBLE|APPENDIX)/i,
+                                        ];
+
+                                        lines.forEach(line => {
+                                            const trimmed = line.trim();
+                                            if (!trimmed) return;
+
+                                            const isHeading = headingPatterns.some(pattern => pattern.test(trimmed));
+                                            const isAllCaps = trimmed === trimmed.toUpperCase() && trimmed.length > 3 && trimmed.length < 100;
+
+                                            if (isHeading || isAllCaps) {
+                                                const id = trimmed.toString().toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '-');
+                                                headings.push({ text: trimmed, id });
+                                            }
+                                        });
+
+                                        if (headings.length === 0) return <p className="text-sm text-gray-500 italic">No sections found</p>;
+
+                                        return headings.map((heading, idx) => (
+                                            <a
+                                                key={idx}
+                                                href={`#${heading.id}`}
+                                                className="block text-xs text-gray-600 hover:text-navy hover:bg-gray-200 px-2 py-1.5 rounded transition-colors truncate"
+                                                title={heading.text}
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    document.getElementById(heading.id)?.scrollIntoView({ behavior: 'smooth' });
+                                                }}
+                                            >
+                                                {heading.text}
+                                            </a>
+                                        ));
+                                    })()}
+                                </div>
+                            </div>
+
+                            {/* Main Content */}
+                            <div className="flex-1 overflow-y-auto p-6 md:p-8 scroll-smooth">
+                                <div className="max-w-4xl mx-auto prose prose-lg">
+                                    {contentSearchQuery.trim()
+                                        ? getHighlightedContent(selectedAct.content, contentSearchQuery)
+                                        : formatContent(selectedAct.content)
+                                    }
+                                </div>
                             </div>
                         </div>
 
