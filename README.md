@@ -31,6 +31,7 @@
 |---------|-------------|
 | 🎨 **Premium Design** | Clean, professional UI with elegant amber & warm color palette |
 | ✍️ **Rich Content** | Full GitHub Flavored Markdown support with syntax highlighting |
+| 📜 **Bare Acts Library** | Comprehensive collection of Indian legislation with structured chapters & sections |
 | 🔐 **Secure Admin** | Protected dashboard for content management |
 | 💬 **User Engagement** | Real-time comments, likes with Google OAuth authentication |
 | 📱 **Fully Responsive** | Seamless experience across all devices |
@@ -47,6 +48,13 @@
 - **PDF Attachments** — Embed and view PDF documents inline
 - **Social Sharing** — Share articles on Twitter, LinkedIn, and more
 - **Like & Comment System** — Real-time user engagement with Supabase Realtime
+
+### 📜 Bare Acts Library
+- **Comprehensive Legislation** — Access to major Indian laws including the Constitution, IPC, CrPC, and more
+- **Structured Content** — Well-organized chapters, sections, and articles for easy navigation
+- **Search & Filter** — Quickly find specific acts with smart filtering options
+- **Beautifully Formatted** — Clean presentation with professional typography and layout
+- **Regular Updates** — Content maintained to reflect the latest amendments
 
 ### 🔧 Admin Features
 - **Blog Editor** — Create and edit articles with live markdown preview
