@@ -26,7 +26,7 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-black">
+      <div className="min-h-screen bg-white">
         <Suspense fallback={<LawLoader />}>
           <Routes>
             {/* Public Routes */}

@@ -2,11 +2,11 @@ import React from 'react';
 
 const LawLoader = () => {
     return (
-        <div className="fixed inset-0 bg-[#0a0f1c] z-50 flex flex-col items-center justify-center overflow-hidden">
+        <div className="fixed inset-0 bg-cream z-50 flex flex-col items-center justify-center overflow-hidden">
             {/* Background elements */}
             <div className="absolute inset-0 opacity-20">
-                <div className="absolute top-0 left-0 w-96 h-96 bg-navy/30 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-                <div className="absolute bottom-0 right-0 w-96 h-96 bg-gold/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+                <div className="absolute top-0 left-0 w-96 h-96 bg-navy/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+                <div className="absolute bottom-0 right-0 w-96 h-96 bg-gold/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
             </div>
 
             {/* Main Animation Container */}
@@ -31,7 +31,7 @@ const LawLoader = () => {
                             {/* Top Finial (Decorative tip) */}
                             <circle cx="100" cy="20" r="4" fill="url(#gold-gradient)" />
                             {/* Pivot Point (Where beam rotates) */}
-                            <circle cx="100" cy="40" r="3" fill="#0a0f1c" stroke="url(#gold-gradient)" strokeWidth="2" />
+                            <circle cx="100" cy="40" r="3" fill="#faf9f6" stroke="url(#gold-gradient)" strokeWidth="2" />
                         </g>
 
                         {/* 2. Balancing Mechanism (Animated) */}
@@ -62,11 +62,11 @@ const LawLoader = () => {
             </div>
 
             <div className="text-center relative z-10 mt-4">
-                <h2 className="text-3xl md:text-5xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#bf953f] mb-4 animate-shine tracking-wider">
+                <h2 className="text-3xl md:text-5xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#bf953f] via-[#8b6914] to-[#bf953f] mb-4 animate-shine tracking-wider">
                     Law-gically Loading...
                 </h2>
-                <div className="w-32 h-1 bg-gradient-to-r from-transparent via-[#bf953f] to-transparent mx-auto rounded-full"></div>
-                <p className="text-gray-400 mt-4 text-sm tracking-widest uppercase animate-pulse">Preparing Legal Resources</p>
+                <div className="w-32 h-1 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto rounded-full"></div>
+                <p className="text-gray-500 mt-4 text-sm tracking-widest uppercase animate-pulse">Preparing Legal Resources</p>
             </div>
 
             <style>{`
@@ -88,7 +88,6 @@ const LawLoader = () => {
                 .animate-balance {
                     animation: balance 4s ease-in-out infinite;
                 }
-                /* Counter rotation for scales to keep them upright-ish or swing naturally */
                 .animate-scale-counter-left {
                     animation: scale-counter 4s ease-in-out infinite;
                 }

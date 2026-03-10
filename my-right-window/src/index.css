@@ -14,14 +14,6 @@
   --color-off-white: #f8fafc;
   --color-warm-gray: #6b7280;
   
-  /* Legacy compatibility */
-  --color-dark-slate: #0f172a;
-  --color-neon-green: #1a365d;
-  --color-neon-cyan: #2c5282;
-  --color-neon-orange: #b8860b;
-  --color-deep-black: #0f172a;
-  --color-dark-gray: #1e293b;
-  
   /* Custom Shadows */
   --shadow-elegant: 0 4px 20px rgba(0, 0, 0, 0.08);
   --shadow-elegant-lg: 0 10px 40px rgba(0, 0, 0, 0.12);
