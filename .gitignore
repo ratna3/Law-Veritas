@@ -2,3 +2,11 @@
 
 #Ignore vscode AI rules
 .github\instructions\codacy.instructions.md
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.*.local
+my-right-window/.env
+my-right-window/.env.local

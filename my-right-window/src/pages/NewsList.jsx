@@ -4,70 +4,67 @@ import BlogCard from '../components/blog/BlogCard';
 import Pagination from '../components/blog/Pagination';
 import SearchBar from '../components/blog/SearchBar';
 
-const BLOGS_PER_PAGE = 12;
+const NEWS_PER_PAGE = 12;
 
-const BlogList = () => {
+const NewsList = () => {
   const { blogs, isLoading, error, fetchBlogs, subscribeToBlogs } = useBlogStore();
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTag, setSelectedTag] = useState(null);
 
-  // Fetch blogs and subscribe to real-time updates
   useEffect(() => {
-    fetchBlogs(true); // Only fetch published blogs
-
-    // Subscribe to real-time updates
+    fetchBlogs(true);
     const channel = subscribeToBlogs();
-
-    // Cleanup subscription on unmount
     return () => {
       channel?.unsubscribe();
     };
   }, [fetchBlogs, subscribeToBlogs]);
 
-  // Filter blogs based on search and tags
-  const filteredBlogs = useMemo(() => {
-    // Only show blog-type entries (exclude news)
-    let filtered = blogs.filter(blog => blog.type !== 'news');
+  // Filter only news articles
+  const newsArticles = useMemo(() => {
+    return blogs.filter(blog => blog.type === 'news');
+  }, [blogs]);
 
-    // Filter by search term
+  // Filter news based on search and tags
+  const filteredNews = useMemo(() => {
+    let filtered = [...newsArticles];
+
     if (searchTerm) {
       const searchLower = searchTerm.toLowerCase();
       filtered = filtered.filter(
-        (blog) =>
-          blog.title.toLowerCase().includes(searchLower) ||
-          blog.content.toLowerCase().includes(searchLower) ||
-          blog.author.toLowerCase().includes(searchLower) ||
-          blog.tags?.some((tag) => tag.toLowerCase().includes(searchLower))
+        (article) =>
+          article.title.toLowerCase().includes(searchLower) ||
+          article.content.toLowerCase().includes(searchLower) ||
+          article.author.toLowerCase().includes(searchLower) ||
+          article.tags?.some((tag) => tag.toLowerCase().includes(searchLower))
       );
     }
 
-    // Filter by selected tag
     if (selectedTag) {
-      filtered = filtered.filter((blog) => blog.tags?.includes(selectedTag));
+      filtered = filtered.filter((article) => article.tags?.includes(selectedTag));
     }
 
     return filtered;
-  }, [blogs, searchTerm, selectedTag]);
+  }, [newsArticles, searchTerm, selectedTag]);
 
-  // Get unique tags from all blogs
+  // Get unique tags from news articles
   const allTags = useMemo(() => {
     const tagsSet = new Set();
-    blogs.forEach((blog) => {
-      blog.tags?.forEach((tag) => tagsSet.add(tag));
+    newsArticles.forEach((article) => {
+      article.tags?.forEach((tag) => tagsSet.add(tag));
     });
     return Array.from(tagsSet).sort();
-  }, [blogs]);
+  }, [newsArticles]);
 
   // Pagination
-  const totalPages = Math.ceil(filteredBlogs.length / BLOGS_PER_PAGE);
-  const startIndex = (currentPage - 1) * BLOGS_PER_PAGE;
-  const endIndex = startIndex + BLOGS_PER_PAGE;
-  const currentBlogs = filteredBlogs.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(filteredNews.length / NEWS_PER_PAGE);
+  const startIndex = (currentPage - 1) * NEWS_PER_PAGE;
+  const endIndex = startIndex + NEWS_PER_PAGE;
+  const currentNews = filteredNews.slice(startIndex, endIndex);
 
   const handleSearch = (term) => {
     setSearchTerm(term);
-    setCurrentPage(1); // Reset to page 1 when searching
+    setCurrentPage(1);
   };
 
   const handleTagClick = (tag) => {
@@ -76,7 +73,7 @@ const BlogList = () => {
     } else {
       setSelectedTag(tag);
     }
-    setCurrentPage(1); // Reset to page 1 when filtering
+    setCurrentPage(1);
   };
 
   const handlePageChange = (page) => {
@@ -89,16 +86,16 @@ const BlogList = () => {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-navy/5 border border-navy/10 rounded-full mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gold/5 border border-gold/10 rounded-full mb-6">
             <span className="w-2 h-2 bg-gold rounded-full"></span>
-            <span className="text-sm font-medium text-navy">Legal Articles & Analysis</span>
+            <span className="text-sm font-medium text-gold">Latest Legal News</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4 animate-slideUp">
-            My <span className="text-navy">Blogs</span>
+            Legal <span className="text-navy">News</span>
           </h1>
           <div className="w-24 h-1 bg-gold mx-auto my-6 rounded-full"></div>
           <p className="text-xl text-gray-500 animate-slideUp max-w-2xl mx-auto" style={{ animationDelay: '0.1s' }}>
-            Discover the latest articles, legal perspectives, and expert analysis
+            Stay up to date with the latest legal developments and news
           </p>
         </div>
 
@@ -141,13 +138,13 @@ const BlogList = () => {
           <p className="text-gray-500">
             {searchTerm || selectedTag ? (
               <>
-                Found <span className="text-navy font-semibold">{filteredBlogs.length}</span> result
-                {filteredBlogs.length !== 1 ? 's' : ''}
+                Found <span className="text-navy font-semibold">{filteredNews.length}</span> result
+                {filteredNews.length !== 1 ? 's' : ''}
               </>
             ) : (
               <>
-                Showing <span className="text-navy font-semibold">{blogs.length}</span> article
-                {blogs.length !== 1 ? 's' : ''}
+                Showing <span className="text-navy font-semibold">{newsArticles.length}</span> news article
+                {newsArticles.length !== 1 ? 's' : ''}
               </>
             )}
           </p>
@@ -157,7 +154,7 @@ const BlogList = () => {
         {isLoading && (
           <div className="flex flex-col items-center justify-center py-20">
             <div className="w-16 h-16 border-4 border-navy border-t-transparent rounded-full animate-spin mb-4" />
-            <p className="text-gray-500">Loading blogs...</p>
+            <p className="text-gray-500">Loading news...</p>
           </div>
         )}
 
@@ -169,7 +166,7 @@ const BlogList = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
             </div>
-            <h3 className="text-xl font-serif font-bold text-gray-900 mb-2">Error Loading Articles</h3>
+            <h3 className="text-xl font-serif font-bold text-gray-900 mb-2">Error Loading News</h3>
             <p className="text-gray-500 mb-6">{error}</p>
             <button onClick={() => fetchBlogs(true)} className="btn-primary">
               Try Again
@@ -178,18 +175,18 @@ const BlogList = () => {
         )}
 
         {/* Empty State */}
-        {!isLoading && !error && currentBlogs.length === 0 && (
+        {!isLoading && !error && currentNews.length === 0 && (
           <div className="card-elevated max-w-lg mx-auto p-12 text-center">
             <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
               </svg>
             </div>
-            <h3 className="text-2xl font-serif font-bold text-gray-900 mb-2">No Articles Found</h3>
+            <h3 className="text-2xl font-serif font-bold text-gray-900 mb-2">No News Articles Found</h3>
             <p className="text-gray-500 mb-6">
               {searchTerm || selectedTag
                 ? 'Try adjusting your search or filter criteria.'
-                : 'Check back soon for new content!'}
+                : 'Check back soon for legal news updates!'}
             </p>
             {(searchTerm || selectedTag) && (
               <button
@@ -205,17 +202,17 @@ const BlogList = () => {
           </div>
         )}
 
-        {/* Blog Grid */}
-        {!isLoading && !error && currentBlogs.length > 0 && (
+        {/* News Grid */}
+        {!isLoading && !error && currentNews.length > 0 && (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-              {currentBlogs.map((blog, index) => (
+              {currentNews.map((article, index) => (
                 <div
-                  key={blog.id}
+                  key={article.id}
                   className="animate-slideUp"
                   style={{ animationDelay: `${index * 0.05}s` }}
                 >
-                  <BlogCard blog={blog} />
+                  <BlogCard blog={article} />
                 </div>
               ))}
             </div>
@@ -233,4 +230,4 @@ const BlogList = () => {
   );
 };
 
-export default BlogList;
+export default NewsList;

@@ -11,10 +11,9 @@ export default function BlogCard({ blog }) {
     });
   };
 
-  // Get first image or use placeholder
-  const thumbnail = blog.images && blog.images.length > 0 
-    ? blog.images[0] 
-    : null;
+  // Get thumbnail_url first, then fall back to first image
+  const thumbnail = blog.thumbnail_url 
+    || (blog.images && blog.images.length > 0 ? blog.images[0] : null);
 
   // Truncate content for preview
   const previewText = blog.content.length > 150 

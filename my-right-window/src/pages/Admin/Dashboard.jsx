@@ -352,7 +352,7 @@ export default function AdminDashboard() {
         )}
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
           <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-card">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-navy/10 rounded-xl flex items-center justify-center">
@@ -363,6 +363,21 @@ export default function AdminDashboard() {
               <div>
                 <h3 className="text-gray-500 text-sm font-medium">Total Articles</h3>
                 <p className="text-3xl font-bold text-gray-900">{blogs.length}</p>
+              </div>
+            </div>
+          </div>
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-card">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-gray-500 text-sm font-medium">News</h3>
+                <p className="text-3xl font-bold text-blue-600">
+                  {blogs.filter(b => b.type === 'news').length}
+                </p>
               </div>
             </div>
           </div>
@@ -413,8 +428,8 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Create New Blog Button */}
-        <div className="mb-6">
+        {/* Create New Buttons */}
+        <div className="mb-6 flex gap-4">
           <button
             onClick={() => navigate('/admin/editor')}
             className="px-6 py-3 bg-navy text-white font-semibold rounded-xl hover:bg-navy-dark transition-colors shadow-elegant flex items-center gap-2"
@@ -436,6 +451,9 @@ export default function AdminDashboard() {
                     Title
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Type
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Author
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -455,7 +473,7 @@ export default function AdminDashboard() {
               <tbody className="divide-y divide-gray-100">
                 {blogs.length === 0 ? (
                   <tr>
-                    <td colSpan="6" className="px-6 py-16 text-center">
+                    <td colSpan="7" className="px-6 py-16 text-center">
                       <div className="flex flex-col items-center">
                         <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
                           <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -475,6 +493,15 @@ export default function AdminDashboard() {
                         <div className="text-gray-400 text-sm truncate max-w-xs">
                           {blog.slug}
                         </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                          blog.type === 'news'
+                            ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                            : 'bg-navy/5 text-navy border border-navy/10'
+                        }`}>
+                          {blog.type === 'news' ? '📰 News' : '📝 Blog'}
+                        </span>
                       </td>
                       <td className="px-6 py-4 text-gray-600">
                         {blog.author}

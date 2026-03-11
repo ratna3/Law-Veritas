@@ -16,6 +16,7 @@ const Bareacts = lazy(() => import('./pages/Bareacts'));
 const AdminLogin = lazy(() => import('./pages/Admin/Login'));
 const AdminDashboard = lazy(() => import('./pages/Admin/Dashboard'));
 const BlogEditor = lazy(() => import('./pages/Admin/BlogEditor'));
+const NewsList = lazy(() => import('./pages/NewsList'));
 
 function App() {
   const { initialize } = useAuthStore();
@@ -35,6 +36,7 @@ function App() {
             <Route path="/blog/:slug" element={<><Navbar /><BlogDetail /></>} />
             <Route path="/about" element={<><Navbar /><About /></>} />
             <Route path="/bareacts" element={<><Navbar /><Bareacts /></>} />
+            <Route path="/news" element={<><Navbar /><NewsList /></>} />
 
             {/* Admin Routes */}
             <Route path="/admin/login" element={<AdminLogin />} />

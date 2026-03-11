@@ -14,7 +14,10 @@ export default function BlogEditor() {
     author: '',
     tags: '',
     published: false,
+    featured: false,
+    type: 'blog',
   });
+  const [thumbnail, setThumbnail] = useState(null);
   const [images, setImages] = useState([]);
   const [pdf, setPdf] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -37,14 +40,23 @@ export default function BlogEditor() {
           author: data.author,
           tags: data.tags?.join(', ') || '',
           published: data.published,
+          featured: data.featured || false,
+          type: data.type || 'blog',
         });
 
+        if (data.thumbnail_url) {
+          setThumbnail({ url: data.thumbnail_url, name: 'Current thumbnail' });
+        }
+
         if (data.images) {
-          // Convert string URLs to object structure used by component
           setImages(data.images.map(url => ({
             url,
-            alt: '' // Database doesn't store alt text currently
+            alt: ''
           })));
+        }
+
+        if (data.pdf_url) {
+          setPdf({ url: data.pdf_url, name: data.pdf_name || 'Document.pdf' });
         }
       } catch (error) {
         alert('Error loading blog: ' + error.message);
@@ -62,6 +74,33 @@ export default function BlogEditor() {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
+  };
+
+  const handleThumbnailUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `thumb-${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('images')
+        .upload(fileName, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('images')
+        .getPublicUrl(fileName);
+
+      setThumbnail({ url: publicUrl, name: file.name });
+    } catch (error) {
+      alert('Error uploading thumbnail: ' + error.message);
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleImageUpload = async (e) => {
@@ -166,11 +205,13 @@ export default function BlogEditor() {
         tags: Array.isArray(formData.tags)
           ? formData.tags
           : (formData.tags ? formData.tags.split(',').map(t => t.trim()).filter(Boolean) : []),
-        // Extract URLs from image objects, ensure it's an array
         images: Array.isArray(images) ? images.map(img => img.url) : [],
+        thumbnail_url: thumbnail?.url || null,
         pdf_url: pdf?.url || null,
         pdf_name: pdf?.name || null,
         published: formData.published,
+        featured: formData.featured,
+        type: formData.type,
         updated_at: new Date().toISOString(),
       };
 
@@ -226,6 +267,43 @@ export default function BlogEditor() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-card">
+            {/* Content Type */}
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Content Type *
+              </label>
+              <div className="flex gap-4">
+                <label className={`flex items-center gap-2 px-4 py-3 rounded-xl border cursor-pointer transition-colors ${formData.type === 'blog' ? 'bg-navy/10 border-navy text-navy' : 'bg-white border-gray-300 text-gray-700 hover:border-gray-400'}`}>
+                  <input
+                    type="radio"
+                    name="type"
+                    value="blog"
+                    checked={formData.type === 'blog'}
+                    onChange={handleInputChange}
+                    className="w-4 h-4 text-navy"
+                  />
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <span className="font-medium">Blog Post</span>
+                </label>
+                <label className={`flex items-center gap-2 px-4 py-3 rounded-xl border cursor-pointer transition-colors ${formData.type === 'news' ? 'bg-gold/10 border-gold text-gold' : 'bg-white border-gray-300 text-gray-700 hover:border-gray-400'}`}>
+                  <input
+                    type="radio"
+                    name="type"
+                    value="news"
+                    checked={formData.type === 'news'}
+                    onChange={handleInputChange}
+                    className="w-4 h-4 text-gold"
+                  />
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                  </svg>
+                  <span className="font-medium">News Article</span>
+                </label>
+              </div>
+            </div>
+
             {/* Title */}
             <div className="mb-6">
               <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
@@ -304,10 +382,76 @@ export default function BlogEditor() {
           <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-card">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Media</h3>
 
-            {/* Images */}
+            {/* Thumbnail (JPG) */}
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Images
+                Thumbnail Image (JPG/PNG) — displayed as the card image
+              </label>
+              <input
+                type="file"
+                accept="image/jpeg,image/jpg,image/png,image/webp"
+                onChange={handleThumbnailUpload}
+                disabled={uploading}
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-navy file:text-white file:font-medium hover:file:bg-navy-dark cursor-pointer"
+              />
+              {thumbnail && (
+                <div className="mt-4 relative inline-block group">
+                  <img
+                    src={thumbnail.url}
+                    alt="Thumbnail preview"
+                    className="w-48 h-32 object-cover rounded-xl border border-gray-200"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setThumbnail(null)}
+                    className="absolute top-2 right-2 bg-red-500 text-white p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                  <span className="block text-xs text-gray-500 mt-1">{thumbnail.name}</span>
+                </div>
+              )}
+            </div>
+
+            {/* PDF */}
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                PDF Document — viewable when article is opened
+              </label>
+              <input
+                type="file"
+                accept=".pdf"
+                onChange={handlePdfUpload}
+                disabled={uploading}
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-gold file:text-white file:font-medium hover:file:bg-gold-dark cursor-pointer"
+              />
+              {pdf && (
+                <div className="mt-3 flex items-center justify-between p-4 bg-slate-50 border border-gray-200 rounded-xl">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center">
+                      <svg className="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <span className="text-sm font-medium text-gray-700">{pdf.name}</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setPdf(null)}
+                    className="text-red-600 hover:text-red-700 font-medium text-sm"
+                  >
+                    Remove
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Additional Images */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Additional Images (optional gallery)
               </label>
               <input
                 type="file"
@@ -340,57 +484,40 @@ export default function BlogEditor() {
                 </div>
               )}
             </div>
-
-            {/* PDF */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                PDF Document
-              </label>
-              <input
-                type="file"
-                accept=".pdf"
-                onChange={handlePdfUpload}
-                disabled={uploading}
-                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-gold file:text-white file:font-medium hover:file:bg-gold-dark cursor-pointer"
-              />
-              {pdf && (
-                <div className="mt-3 flex items-center justify-between p-4 bg-slate-50 border border-gray-200 rounded-xl">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center">
-                      <svg className="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                    <span className="text-sm font-medium text-gray-700">{pdf.name}</span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setPdf(null)}
-                    className="text-red-600 hover:text-red-700 font-medium text-sm"
-                  >
-                    Remove
-                  </button>
-                </div>
-              )}
-            </div>
           </div>
 
           {/* Publishing Options */}
           <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-card">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Publishing</h3>
 
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                id="published"
-                name="published"
-                checked={formData.published}
-                onChange={handleInputChange}
-                className="w-5 h-5 text-navy border-gray-300 rounded focus:ring-navy"
-              />
-              <label htmlFor="published" className="ml-3 text-sm font-medium text-gray-700">
-                Publish immediately
-              </label>
+            <div className="space-y-4">
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="published"
+                  name="published"
+                  checked={formData.published}
+                  onChange={handleInputChange}
+                  className="w-5 h-5 text-navy border-gray-300 rounded focus:ring-navy"
+                />
+                <label htmlFor="published" className="ml-3 text-sm font-medium text-gray-700">
+                  Publish immediately
+                </label>
+              </div>
+
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="featured"
+                  name="featured"
+                  checked={formData.featured}
+                  onChange={handleInputChange}
+                  className="w-5 h-5 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+                />
+                <label htmlFor="featured" className="ml-3 text-sm font-medium text-gray-700">
+                  Feature on homepage
+                </label>
+              </div>
             </div>
           </div>
 

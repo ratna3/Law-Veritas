@@ -69,7 +69,7 @@ const Home = () => {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-slideUp" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
                 <Link to="/blogs" className="btn-primary group inline-flex items-center justify-center">
-                  Explore Our Insights
+                  Explore Our Blogs
                   <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
@@ -197,7 +197,7 @@ const Home = () => {
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="section-title">Our Latest Insights</h2>
+            <h2 className="section-title">Our Latest Blogs</h2>
             <div className="divider-gold"></div>
             <p className="section-subtitle">
               Stay informed with our latest legal perspectives and analysis
@@ -309,7 +309,7 @@ const Home = () => {
       <section className="py-16 md:py-24 px-4 bg-white">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-navy mb-4">
-            Stay Updated with Our Insights
+            Stay Updated with Our Blogs
           </h2>
           <div className="divider-gold"></div>
           <p className="text-gray-500 mb-10 text-lg leading-relaxed">
@@ -337,7 +337,7 @@ const Home = () => {
             </div>
             <div className="flex items-center gap-6 text-gray-400 text-sm">
               <Link to="/" className="hover:text-white transition-colors">Home</Link>
-              <Link to="/blogs" className="hover:text-white transition-colors">Insights</Link>
+              <Link to="/blogs" className="hover:text-white transition-colors">My Blogs</Link>
               <Link to="/bareacts" className="hover:text-white transition-colors">Bare Acts</Link>
               <Link to="/admin/login" className="hover:text-white transition-colors">Admin</Link>
             </div>

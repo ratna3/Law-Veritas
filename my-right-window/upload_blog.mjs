@@ -3,10 +3,21 @@ import { createClient } from '@supabase/supabase-js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { config } from 'dotenv';
 
-// Supabase Configuration
-const SUPABASE_URL = 'https://tvwfrxndpxxdrtlaemak.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2d2ZyeG5kcHh4ZHJ0bGFlbWFrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4OTgzOTYsImV4cCI6MjA3OTQ3NDM5Nn0.jcgaWLlLOskJXc9qM8sm5L2IeeytbrwxPlFuKmAZ0ts';
+// Load environment variables from .env file
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+config({ path: path.resolve(__dirname, '.env') });
+
+// Supabase Configuration from environment variables
+const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = process.env.VITE_SUPABASE_ANON_KEY;
+
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  console.error('Missing VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY in .env file');
+  process.exit(1);
+}
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 

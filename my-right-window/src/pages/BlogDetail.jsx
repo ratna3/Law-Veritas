@@ -58,7 +58,7 @@ const BlogDetail = () => {
               <h3 className="text-xl font-serif font-bold text-gray-900 mb-2">Article Not Found</h3>
               <p className="text-gray-500 mb-6">{error || 'The article you are looking for does not exist.'}</p>
               <button onClick={() => navigate('/blogs')} className="btn-primary">
-                Back to Insights
+                Back to My Blogs
               </button>
             </div>
           </div>
@@ -79,7 +79,7 @@ const BlogDetail = () => {
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            Back to Insights
+            Back to My Blogs
           </Link>
         </div>
 
@@ -174,7 +174,7 @@ const BlogDetail = () => {
                 <ShareButtons title={currentBlog.title} />
               </div>
               <Link to="/blogs" className="btn-secondary">
-                View All Insights
+                View All Blogs
               </Link>
             </div>
           </div>
@@ -189,7 +189,7 @@ const BlogDetail = () => {
             <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
               {/* Back button */}
               <Link to="/blogs" className="btn-primary">
-                ← Back to All Insights
+                ← Back to All Blogs
               </Link>
             </div>
           </footer>
