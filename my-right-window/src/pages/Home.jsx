@@ -1,10 +1,23 @@
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
-import ModelScene from '../components/3d/ModelScene';
 import BlogCard from '../components/blog/BlogCard';
 import { ScaleIcon, GavelIcon, FileTextIcon, UsersIcon } from '../components/Icons';
 import { useBlogStore } from '../store';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
+
+const ScalesOfJustice = lazy(() => import('../components/3d/ScalesOfJustice'));
+const GavelScene = lazy(() => import('../components/3d/GavelScene'));
+const PillarScene = lazy(() => import('../components/3d/PillarScene'));
+
+function Scene3DFallback() {
+  return (
+    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-50/50 to-cream">
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-10 h-10 border-3 border-navy/20 border-t-navy rounded-full animate-spin" />
+      </div>
+    </div>
+  );
+}
 
 const services = [
   { Icon: ScaleIcon, title: 'Corporate Law', desc: 'Expert guidance for businesses navigating complex regulatory landscapes' },
@@ -27,19 +40,16 @@ const Home = () => {
   return (
     <div className="bg-white">
       {/* ═══════════════════════════════════════════════════════
-          HERO SECTION — Angel of Justice (left) + Brand (right)
+          HERO SECTION — Scales of Justice (left) + Brand (right)
           ═══════════════════════════════════════════════════════ */}
       <section className="relative min-h-screen flex items-center bg-gradient-to-b from-white via-cream to-white overflow-hidden pt-24 md:pt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left: Angel of Justice 3D Model */}
+            {/* Left: Scales of Justice 3D */}
             <div className="h-[350px] md:h-[500px] rounded-2xl overflow-hidden bg-gradient-to-br from-slate-50/50 to-cream order-2 lg:order-1 animate-fadeIn">
-              <ModelScene
-                modelPath="/models/angel_of_justice.glb"
-                scale={2}
-                cameraPosition={[0, 0, 5]}
-                rotationSpeed={0.2}
-              />
+              <Suspense fallback={<Scene3DFallback />}>
+                <ScalesOfJustice />
+              </Suspense>
             </div>
 
             {/* Right: Brand + Headline */}
@@ -169,15 +179,12 @@ const Home = () => {
               </Link>
             </div>
 
-            {/* Right: Gavel 3D Model (lazy-loaded) */}
+            {/* Right: Gavel 3D (lazy-loaded) */}
             <div className="h-[300px] md:h-[400px] rounded-2xl overflow-hidden bg-gradient-to-br from-navy/5 to-gold/5 border border-navy/10">
               {bareActsVisible ? (
-                <ModelScene
-                  modelPath="/models/gavel.glb"
-                  scale={1.8}
-                  cameraPosition={[0, 0, 5]}
-                  rotationSpeed={0.25}
-                />
+                <Suspense fallback={<Scene3DFallback />}>
+                  <GavelScene />
+                </Suspense>
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
                   <div className="w-10 h-10 border-3 border-navy/20 border-t-navy rounded-full animate-spin" />
@@ -247,7 +254,7 @@ const Home = () => {
       </div>
 
       {/* ═══════════════════════════════════════════════════════════
-          ABOUT SECTION — Text + values (left) + Chess Queen (right)
+          ABOUT SECTION — Text + values (left) + Pillar (right)
           ═══════════════════════════════════════════════════════════ */}
       <section
         id="about"
@@ -284,15 +291,12 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Right: Chess Queen 3D Model (lazy-loaded) */}
+            {/* Right: Pillar 3D (lazy-loaded) */}
             <div className="h-[300px] md:h-[400px] rounded-2xl overflow-hidden bg-gradient-to-br from-slate-50 to-cream border border-gray-200">
               {aboutVisible ? (
-                <ModelScene
-                  modelPath="/models/queen_chess.glb"
-                  scale={1.5}
-                  cameraPosition={[0, 0, 5]}
-                  rotationSpeed={0.3}
-                />
+                <Suspense fallback={<Scene3DFallback />}>
+                  <PillarScene />
+                </Suspense>
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
                   <div className="w-10 h-10 border-3 border-navy/20 border-t-navy rounded-full animate-spin" />
