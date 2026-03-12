@@ -10,3 +10,4 @@
 .env.*.local
 my-right-window/.env
 my-right-window/.env.local
+my-right-window/supabase/.temp/

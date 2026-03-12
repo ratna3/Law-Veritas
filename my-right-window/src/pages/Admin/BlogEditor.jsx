@@ -16,6 +16,7 @@ export default function BlogEditor() {
     published: false,
     featured: false,
     type: 'blog',
+    language: 'en',
   });
   const [thumbnail, setThumbnail] = useState(null);
   const [images, setImages] = useState([]);
@@ -42,6 +43,7 @@ export default function BlogEditor() {
           published: data.published,
           featured: data.featured || false,
           type: data.type || 'blog',
+          language: data.language || 'en',
         });
 
         if (data.thumbnail_url) {
@@ -180,19 +182,21 @@ export default function BlogEditor() {
     setLoading(true);
 
     try {
-      // Robust slug generation
+      // Unicode-friendly slug generation (supports Hindi, English, and other scripts)
       let slug = formData.title
+        .trim()
         .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/(^-|-$)/g, '');
+        .replace(/[\s_]+/g, '-')                // Replace whitespace/underscores with hyphens
+        .replace(/[^\p{L}\p{N}\-]/gu, '')      // Keep Unicode letters, numbers, hyphens
+        .replace(/\-{2,}/g, '-')                 // Collapse consecutive hyphens
+        .replace(/^-+|-+$/g, '');                // Remove leading/trailing hyphens
 
-      // If slug is empty (e.g. title was only special chars), use timestamp
-      if (!slug) {
-        slug = `article-${Date.now()}`;
+      // If slug is empty or too short, use timestamp fallback
+      if (!slug || slug.length < 2) {
+        slug = `${formData.type}-${Date.now()}`;
       }
 
-      // Ensure unique slug by appending date if needed (simple collision avoidance)
-      // For a more robust solution we'd check DB, but this helps significantly
+      // Ensure unique slug by appending short timestamp (collision avoidance)
       if (!id) {
         slug = `${slug}-${Math.floor(Date.now() / 1000)}`;
       }
@@ -217,17 +221,32 @@ export default function BlogEditor() {
 
       if (id) {
         // Update existing
-        const { error } = await supabase
+        let { error } = await supabase
           .from('blogs')
-          .update(blogData)
+          .update({ ...blogData, language: formData.language })
           .eq('id', id);
+
+        // If language column doesn't exist yet, retry without it
+        if (error && error.message?.includes('language')) {
+          ({ error } = await supabase
+            .from('blogs')
+            .update(blogData)
+            .eq('id', id));
+        }
 
         if (error) throw error;
       } else {
         // Create new
-        const { error } = await supabase
+        let { error } = await supabase
           .from('blogs')
-          .insert([blogData]);
+          .insert([{ ...blogData, language: formData.language }]);
+
+        // If language column doesn't exist yet, retry without it
+        if (error && error.message?.includes('language')) {
+          ({ error } = await supabase
+            .from('blogs')
+            .insert([blogData]));
+        }
 
         if (error) throw error;
       }
@@ -300,6 +319,37 @@ export default function BlogEditor() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                   </svg>
                   <span className="font-medium">News Article</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Language */}
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Language *
+              </label>
+              <div className="flex gap-4">
+                <label className={`flex items-center gap-2 px-4 py-3 rounded-xl border cursor-pointer transition-colors ${formData.language === 'en' ? 'bg-navy/10 border-navy text-navy' : 'bg-white border-gray-300 text-gray-700 hover:border-gray-400'}`}>
+                  <input
+                    type="radio"
+                    name="language"
+                    value="en"
+                    checked={formData.language === 'en'}
+                    onChange={handleInputChange}
+                    className="w-4 h-4 text-navy"
+                  />
+                  <span className="font-medium">English</span>
+                </label>
+                <label className={`flex items-center gap-2 px-4 py-3 rounded-xl border cursor-pointer transition-colors ${formData.language === 'hi' ? 'bg-navy/10 border-navy text-navy' : 'bg-white border-gray-300 text-gray-700 hover:border-gray-400'}`}>
+                  <input
+                    type="radio"
+                    name="language"
+                    value="hi"
+                    checked={formData.language === 'hi'}
+                    onChange={handleInputChange}
+                    className="w-4 h-4 text-navy"
+                  />
+                  <span className="font-medium">हिंदी (Hindi)</span>
                 </label>
               </div>
             </div>

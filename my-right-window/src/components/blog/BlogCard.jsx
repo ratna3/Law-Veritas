@@ -43,6 +43,11 @@ export default function BlogCard({ blog }) {
         {/* Tags */}
         {blog.tags && blog.tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-4">
+            {blog.language === 'hi' && (
+              <span className="px-3 py-1 text-xs font-medium text-white bg-orange-500 rounded-full">
+                हिंदी
+              </span>
+            )}
             {blog.tags.slice(0, 3).map((tag, index) => (
               <span
                 key={index}

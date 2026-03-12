@@ -4,6 +4,9 @@
 .env.production
 .env.*.local
 
+# Supabase CLI temp files
+supabase/.temp/
+
 # Logs
 logs
 *.log
