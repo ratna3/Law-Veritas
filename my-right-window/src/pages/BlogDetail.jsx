@@ -8,6 +8,7 @@ import ImageGallery from '../components/blog/ImageGallery';
 import LikeButton from '../components/blog/LikeButton';
 import CommentSection from '../components/blog/CommentSection';
 import ShareButtons from '../components/blog/ShareButtons';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const BlogDetail = () => {
   const { slug } = useParams();
@@ -188,8 +189,8 @@ const BlogDetail = () => {
           <footer className="pt-8 mt-8 border-t border-gray-200">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
               {/* Back button */}
-              <Link to="/blogs" className="btn-primary">
-                ← Back to All Blogs
+              <Link to="/blogs" className="btn-primary inline-flex items-center gap-2">
+                <FaArrowLeft className="w-4 h-4" /> Back to All Blogs
               </Link>
             </div>
           </footer>

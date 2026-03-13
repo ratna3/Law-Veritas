@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CATEGORIES, BAREACTS } from '../data/bareactsData';
 import { ScaleIcon, GavelIcon, FileTextIcon, UsersIcon, SearchXIcon } from '../components/Icons';
+import { FaBookOpen, FaArrowRight } from 'react-icons/fa';
 
 const categoryIcons = {
     constitutional: ScaleIcon,
@@ -419,9 +420,7 @@ const Bareacts = () => {
                     </p>
                     <Link to="/blogs" className="btn-gold inline-flex items-center text-lg px-8 py-4">
                         Browse Legal Insights
-                        <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
+                        <FaArrowRight className="w-4 h-4 ml-2" />
                     </Link>
                 </div>
             </section>
@@ -555,8 +554,8 @@ const Bareacts = () => {
                         {/* Footer Info */}
                         <div className="bg-gray-50 border-t border-gray-200 p-4 flex-shrink-0">
                             <div className="flex items-center justify-center max-w-4xl mx-auto">
-                                <div className="text-sm text-gray-500">
-                                    📚 {CATEGORIES[selectedAct.category]?.title} • {selectedAct.wordCount?.toLocaleString()} words
+                            <div className="text-sm text-gray-500 flex items-center gap-2">
+                                    <FaBookOpen className="w-4 h-4 text-navy" /> {CATEGORIES[selectedAct.category]?.title} • {selectedAct.wordCount?.toLocaleString()} words
                                 </div>
                             </div>
                         </div>

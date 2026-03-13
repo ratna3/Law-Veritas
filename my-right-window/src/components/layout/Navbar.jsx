@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import UserAuthButton from '../common/UserAuthButton';
+import { FaBalanceScale, FaBars, FaTimes } from 'react-icons/fa';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -33,11 +34,9 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
             <div className="flex items-center">
-              <img
-                src="/logo.png"
-                alt="Law-gically Yours"
-                className="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover"
-              />
+              <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-navy flex items-center justify-center">
+                <FaBalanceScale className="w-4 h-4 md:w-5 md:h-5 text-gold" />
+              </div>
               <div className="ml-3">
                 <span className="text-xl md:text-2xl font-serif font-bold text-navy">Law-gically Yours</span>
                 <span className="hidden sm:block text-xs tracking-wider text-gray-500">
@@ -74,21 +73,11 @@ export default function Navbar() {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden text-gray-700 hover:text-navy focus:outline-none p-2"
           >
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              {isMobileMenuOpen ? (
-                <path d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
+            {isMobileMenuOpen ? (
+              <FaTimes className="h-6 w-6" />
+            ) : (
+              <FaBars className="h-6 w-6" />
+            )}
           </button>
         </div>
       </div>

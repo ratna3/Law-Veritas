@@ -17,7 +17,7 @@ export default function Login() {
     setError('');
 
     try {
-      console.log('🔐 Starting login process...');
+      console.log('[Auth] Starting login process...');
 
       // Sign in with timeout
       const { data, error: signInError } = await Promise.race([
@@ -30,19 +30,19 @@ export default function Login() {
         )
       ]);
 
-      console.log('✅ Sign in response:', { hasData: !!data, error: signInError });
+      console.log('[Auth] Sign in response:', { hasData: !!data, error: signInError });
 
       if (signInError) {
-        console.error('❌ Sign in error:', signInError);
+        console.error('[Auth] Sign in error:', signInError);
         throw signInError;
       }
 
       if (!data || !data.user) {
-        console.error('❌ No user data returned');
+        console.error('[Auth] No user data returned');
         throw new Error('Invalid credentials');
       }
 
-      console.log('👤 User authenticated:', data.user.id);
+      console.log('[Auth] User authenticated:', data.user.id);
 
       // Check if user has admin role with timeout
       const { data: profile, error: profileError } = await Promise.race([
@@ -56,25 +56,25 @@ export default function Login() {
         )
       ]);
 
-      console.log('📋 Profile check:', { profile, profileError });
+      console.log('[Auth] Profile check:', { profile, profileError });
 
       if (profileError) {
-        console.error('❌ Profile error:', profileError);
+        console.error('[Auth] Profile error:', profileError);
         await supabase.auth.signOut();
         throw new Error('Failed to verify admin access');
       }
 
       if (profile?.role !== 'admin') {
-        console.error('❌ User is not admin:', profile?.role);
+        console.error('[Auth] User is not admin:', profile?.role);
         await supabase.auth.signOut();
         throw new Error('Unauthorized: Admin access required');
       }
 
-      console.log('✅ Admin verified, navigating to dashboard...');
+      console.log('[Auth] Admin verified, navigating to dashboard...');
       setUser(data.user);
       navigate('/admin/dashboard');
     } catch (err) {
-      console.error('❌ Login error:', err);
+      console.error('[Auth] Login error:', err);
       setError(err.message || 'An error occurred during login');
       setLoading(false);
     }

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../services/supabase';
 import { useAuthStore, useBlogStore } from '../../store';
+import { FaNewspaper, FaPen } from 'react-icons/fa';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -500,7 +501,7 @@ export default function AdminDashboard() {
                             ? 'bg-blue-50 text-blue-700 border border-blue-200'
                             : 'bg-navy/5 text-navy border border-navy/10'
                         }`}>
-                          {blog.type === 'news' ? '📰 News' : '📝 Blog'}
+                          {blog.type === 'news' ? <><FaNewspaper className="inline w-3 h-3 mr-1" /> News</> : <><FaPen className="inline w-3 h-3 mr-1" /> Blog</>}
                         </span>
                       </td>
                       <td className="px-6 py-4 text-gray-600">

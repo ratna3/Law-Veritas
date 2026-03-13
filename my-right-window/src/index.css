@@ -24,6 +24,8 @@
   --animate-float: float 3s ease-in-out infinite;
   --animate-fadeIn: fadeIn 0.6s ease-out;
   --animate-slideUp: slideUp 0.5s ease-out;
+  --animate-shimmer: shimmer 3s ease-in-out infinite;
+  --animate-pulseGlow: pulseGlow 3s ease-in-out infinite;
 }
 
 @keyframes float {
@@ -39,6 +41,16 @@
 @keyframes slideUp {
   0% { transform: translateY(20px); opacity: 0; }
   100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0.3); }
+  50% { box-shadow: 0 0 20px 4px rgba(184, 134, 11, 0.15); }
 }
 
 @layer base {
@@ -94,6 +106,10 @@
            hover:shadow-2xl transition-all duration-300;
     box-shadow: var(--shadow-elegant-lg);
   }
+
+  .card-elevated:hover {
+    transform: translateY(-4px);
+  }
   
   .input-field {
     @apply bg-white border border-gray-300 text-gray-900 px-4 py-3 rounded-lg
@@ -119,18 +135,19 @@
 }
 
 @layer utilities {
-  .perspective-1000 {
-    perspective: 1000px;
+  .text-gradient-navy-gold {
+    background: linear-gradient(135deg, #1a365d 0%, #b8860b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
-  
-  .transform-style-3d {
-    transform-style: preserve-3d;
+
+  .bg-shimmer-gold {
+    background: linear-gradient(90deg, transparent, rgba(184, 134, 11, 0.08), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
   }
-  
-  .backface-hidden {
-    backface-visibility: hidden;
-  }
-  
+
   .shadow-elegant {
     box-shadow: var(--shadow-elegant);
   }

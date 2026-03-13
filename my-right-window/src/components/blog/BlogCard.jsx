@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { FaBalanceScale } from 'react-icons/fa';
 
 export default function BlogCard({ blog }) {
   const formatDate = (dateString) => {
@@ -34,7 +35,7 @@ export default function BlogCard({ blog }) {
         </div>
       ) : (
         <div className="h-52 bg-gradient-to-br from-slate-100 to-slate-50 flex items-center justify-center">
-          <div className="text-5xl text-navy/20">⚖️</div>
+          <FaBalanceScale className="w-12 h-12 text-navy/20" />
         </div>
       )}
 
