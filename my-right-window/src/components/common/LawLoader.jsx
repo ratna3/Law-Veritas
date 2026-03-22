@@ -1,11 +1,32 @@
+import { useState, useEffect } from 'react';
+
 const LawLoader = () => {
+    const [visible, setVisible] = useState(true);
+
+    // Ensure loader stays visible for at least 4 seconds
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setVisible(false);
+        }, 4000);
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (!visible) return null;
+
     return (
         <div className="fixed inset-0 bg-cream z-50 flex flex-col items-center justify-center">
-            {/* CSS Loader */}
-            <div className="flex flex-col items-center gap-8">
-                <div className="law-loader"></div>
-                <p className="text-sm text-warm-gray tracking-widest uppercase mt-6">
+            <div className="flex flex-col items-center gap-10">
+                {/* Brand name */}
+                <h2 className="text-3xl md:text-4xl font-serif font-bold text-navy tracking-tight">
                     Law-gically Yours
+                </h2>
+
+                {/* CSS Loader animation */}
+                <div className="law-loader"></div>
+
+                {/* Tagline */}
+                <p className="text-sm text-warm-gray tracking-widest uppercase mt-4">
+                    Preparing your experience
                 </p>
             </div>
 
@@ -26,9 +47,11 @@ const LawLoader = () => {
                     background-origin: border-box;
                     position: relative;
                     animation: l9-0 2s infinite;
+                    margin-bottom: 50px;
                 }
                 .law-loader::before {
-                    content: "Loading";
+                    content: "Law-gically Loading";
+                    letter-spacing: 2px;
                 }
                 .law-loader::after {
                     content: "";
