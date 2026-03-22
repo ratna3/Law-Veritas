@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../../services/supabase';
 import { useAuthStore } from '../../store';
 
@@ -153,6 +153,17 @@ export default function Login() {
         <p className="text-center text-gray-400 text-sm mt-6">
           © 2025 Law-gically Yours. All rights reserved.
         </p>
+        <div className="text-center mt-4">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gold transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Homepage
+          </Link>
+        </div>
       </div>
     </div>
   );

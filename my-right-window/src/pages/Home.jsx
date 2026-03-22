@@ -4,7 +4,7 @@ import BlogCard from '../components/blog/BlogCard';
 import { ScaleIcon, GavelIcon, FileTextIcon, UsersIcon } from '../components/Icons';
 import { useBlogStore } from '../store';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
-import { FaBalanceScale, FaGavel, FaBookOpen, FaShieldAlt, FaHandshake, FaLandmark, FaArrowRight } from 'react-icons/fa';
+import { FaBalanceScale, FaGavel, FaBookOpen, FaShieldAlt, FaHandshake, FaLandmark, FaArrowRight, FaLinkedinIn, FaInstagram } from 'react-icons/fa';
 
 const services = [
   { Icon: ScaleIcon, title: 'Corporate Law', desc: 'Expert guidance for businesses navigating complex regulatory landscapes' },
@@ -420,6 +420,26 @@ const Home = () => {
               <Link to="/blogs" className="hover:text-gold transition-colors">My Blogs</Link>
               <Link to="/bareacts" className="hover:text-gold transition-colors">Bare Acts</Link>
               <Link to="/admin/login" className="hover:text-gold transition-colors">Admin</Link>
+            </div>
+            <div className="flex items-center gap-4">
+              <a
+                href="https://www.linkedin.com/in/law-gically-yours-5595653a8?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-gray-400 hover:bg-gold/20 hover:text-gold transition-all duration-300"
+                aria-label="LinkedIn"
+              >
+                <FaLinkedinIn className="w-4 h-4" />
+              </a>
+              <a
+                href="https://www.instagram.com/law_gicallyyours?utm_source=qr&igsh=bTBkZnJ4ZzZrdTVm"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-gray-400 hover:bg-gold/20 hover:text-gold transition-all duration-300"
+                aria-label="Instagram"
+              >
+                <FaInstagram className="w-4 h-4" />
+              </a>
             </div>
             <p className="text-gray-500 text-sm">
               &copy; {new Date().getFullYear()} Law-gically Yours
