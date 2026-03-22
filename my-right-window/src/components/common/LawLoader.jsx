@@ -2,22 +2,46 @@ import { useState, useEffect } from 'react';
 
 const LawLoader = () => {
     const [visible, setVisible] = useState(true);
+    const [fadeOut, setFadeOut] = useState(false);
 
-    // Ensure loader stays visible for at least 4 seconds
     useEffect(() => {
-        const timer = setTimeout(() => {
+        // Show loader for 6 seconds, then fade out over 0.6s
+        const fadeTimer = setTimeout(() => {
+            setFadeOut(true);
+        }, 6000);
+
+        const hideTimer = setTimeout(() => {
             setVisible(false);
-        }, 4000);
-        return () => clearTimeout(timer);
+        }, 6600);
+
+        return () => {
+            clearTimeout(fadeTimer);
+            clearTimeout(hideTimer);
+        };
     }, []);
 
     if (!visible) return null;
 
     return (
-        <div className="fixed inset-0 bg-cream z-50 flex flex-col items-center justify-center">
+        <div
+            className="fixed inset-0 z-[9999] flex flex-col items-center justify-center"
+            style={{
+                background: 'linear-gradient(135deg, #faf8f5 0%, #f5f0e8 50%, #faf8f5 100%)',
+                opacity: fadeOut ? 0 : 1,
+                transition: 'opacity 0.6s ease-out',
+                pointerEvents: fadeOut ? 'none' : 'auto',
+            }}
+        >
             <div className="flex flex-col items-center gap-10">
                 {/* Brand name */}
-                <h2 className="text-3xl md:text-4xl font-serif font-bold text-navy tracking-tight">
+                <h2 style={{
+                    fontSize: 'clamp(1.75rem, 4vw, 2.25rem)',
+                    fontFamily: 'Georgia, "Times New Roman", serif',
+                    fontWeight: 700,
+                    color: '#1a365d',
+                    letterSpacing: '-0.02em',
+                    margin: 0,
+                }}>
                     Law-gically Yours
                 </h2>
 
@@ -25,7 +49,13 @@ const LawLoader = () => {
                 <div className="law-loader"></div>
 
                 {/* Tagline */}
-                <p className="text-sm text-warm-gray tracking-widest uppercase mt-4">
+                <p style={{
+                    fontSize: '0.75rem',
+                    color: '#94a3b8',
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    marginTop: '16px',
+                }}>
                     Preparing your experience
                 </p>
             </div>

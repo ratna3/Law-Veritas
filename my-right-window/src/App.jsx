@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useAuthStore } from './store';
 import Navbar from './components/layout/Navbar';
@@ -20,15 +20,21 @@ const NewsList = lazy(() => import('./pages/NewsList'));
 
 function App() {
   const { initialize } = useAuthStore();
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
     initialize();
+    // Keep initial load flag for 6.6s to match LawLoader timing
+    const timer = setTimeout(() => setIsInitialLoad(false), 6600);
+    return () => clearTimeout(timer);
   }, [initialize]);
 
   return (
     <Router>
       <div className="min-h-screen bg-white">
-        <Suspense fallback={<LawLoader />}>
+        {/* Show loader overlay on initial visit — plays full animation regardless of page load */}
+        {isInitialLoad && <LawLoader />}
+        <Suspense fallback={<div className="min-h-screen" />}>
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<><Navbar /><Home /></>} />
