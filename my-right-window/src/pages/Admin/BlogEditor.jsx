@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { supabase } from '../../services/supabase';
 import { useBlogStore } from '../../store';
+import RichTextEditor from '../../components/common/RichTextEditor';
 
 export default function BlogEditor() {
   const { id } = useParams();
@@ -388,26 +389,14 @@ export default function BlogEditor() {
               />
             </div>
 
-            {/* Content */}
+            {/* Content — Rich Text Editor */}
             <div className="mb-6">
-              <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Content *
               </label>
-              <div className="mb-3 text-xs text-gray-500 bg-gray-50 p-2 rounded-lg border border-gray-100 flex gap-4 flex-wrap">
-                <span>**bold**</span>
-                <span>*italic*</span>
-                <span>[link](url)</span>
-                <span>- bullet point</span>
-              </div>
-              <textarea
-                id="content"
-                name="content"
+              <RichTextEditor
                 value={formData.content}
-                onChange={handleInputChange}
-                required
-                rows={15}
-                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-navy focus:border-transparent transition-colors resize-y"
-                placeholder="Write your article content here... (supports markdown)"
+                onChange={(value) => setFormData(prev => ({ ...prev, content: value }))}
               />
             </div>
 

@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import DOMPurify from 'dompurify';
 import { useBlogStore } from '../store';
 import PDFViewer from '../components/blog/PDFViewer';
 import ImageGallery from '../components/blog/ImageGallery';
@@ -145,11 +146,24 @@ const BlogDetail = () => {
           {/* Main Content */}
           <div className="mb-12 animate-slideUp" style={{ animationDelay: '0.1s' }}>
             <div className="card-elevated p-8 md:p-12">
-              <div className="markdown-content">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                  {currentBlog.content}
-                </ReactMarkdown>
-              </div>
+              {/* Detect HTML content (from rich editor) vs markdown (legacy) */}
+              {currentBlog.content && currentBlog.content.trim().startsWith('<') ? (
+                <div
+                  className="rich-content"
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(currentBlog.content, {
+                      ADD_TAGS: ['iframe'],
+                      ADD_ATTR: ['allowfullscreen', 'frameborder', 'src', 'class', 'style'],
+                    }),
+                  }}
+                />
+              ) : (
+                <div className="markdown-content">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {currentBlog.content}
+                  </ReactMarkdown>
+                </div>
+              )}
             </div>
           </div>
 
