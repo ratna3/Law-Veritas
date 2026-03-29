@@ -172,6 +172,17 @@ export default function JudgementEditor() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!formData.title.trim()) return alert('Please enter a Landmark Judgement Title.');
+    if (!formData.court) return alert('Please select a Court.');
+    if (!formData.author.trim()) return alert('Please enter the Uploaded By name.');
+    
+    // Check if content/summary is essentially empty (no text content)
+    const cleanContent = formData.content.replace(/<[^>]*>?/gm, '').trim();
+    if (!cleanContent) return alert('Please enter the Content / Summary.');
+    
+    if (!pdf) return alert('Please upload the Landmark Judgement PDF Document.');
+
     setLoading(true);
 
     try {
@@ -308,7 +319,6 @@ export default function JudgementEditor() {
                 name="title"
                 value={formData.title}
                 onChange={handleInputChange}
-                required
                 className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-navy focus:border-transparent transition-colors"
                 placeholder="e.g. Kesavananda Bharati v. State of Kerala"
               />
@@ -324,7 +334,6 @@ export default function JudgementEditor() {
                 name="court"
                 value={formData.court}
                 onChange={handleInputChange}
-                required
                 className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-navy focus:border-transparent transition-colors"
               >
                 <option value="">Select Court</option>
@@ -376,7 +385,6 @@ export default function JudgementEditor() {
                 name="author"
                 value={formData.author}
                 onChange={handleInputChange}
-                required
                 className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-navy focus:border-transparent transition-colors"
                 placeholder="Author name"
               />

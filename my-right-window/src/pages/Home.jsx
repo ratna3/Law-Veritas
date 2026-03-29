@@ -107,6 +107,11 @@ const Home = () => {
   return (
     <div className="bg-white">
       {/* ═══════════════════════════════════════════════════════
+          BREAKING NEWS TICKER — Home page only (Below Navbar)
+          ═══════════════════════════════════════════════════════ */}
+      <NewsTicker />
+
+      {/* ═══════════════════════════════════════════════════════
           HERO SECTION — Elegant split layout
           ═══════════════════════════════════════════════════════ */}
       <section className="relative min-h-screen flex items-center overflow-hidden pt-24 md:pt-20">
@@ -216,11 +221,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* ═══════════════════════════════════════════════════════
-          BREAKING NEWS TICKER — Home page only
-          ═══════════════════════════════════════════════════════ */}
-      <NewsTicker />
 
       {/* ═══════════════════════════════════════════
           PRACTICE AREAS — 4-col with SVG Icons
