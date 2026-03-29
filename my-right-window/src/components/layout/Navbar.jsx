@@ -21,7 +21,7 @@ export default function Navbar() {
     { path: '/', label: 'Home' },
     { path: '/blogs', label: 'My Blogs' },
     { path: '/news', label: 'News' },
-    { path: '/judgements', label: 'Judgements' },
+    { path: '/judgements', label: 'Landmark Judgements' },
     { path: '/bareacts', label: 'Bare Acts' },
     { path: '/admin/login', label: 'Admin' },
   ];

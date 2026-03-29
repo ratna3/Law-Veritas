@@ -263,7 +263,7 @@ export default function JudgementEditor() {
               <FaGavel className="w-6 h-6 text-gold" />
               <div>
                 <h1 className="text-2xl font-serif font-bold text-navy">
-                  {id ? 'Edit Judgement' : 'Upload New Judgement'}
+                  {id ? 'Edit Landmark Judgement' : 'Upload New Landmark Judgement'}
                 </h1>
                 <p className="text-gray-500 text-sm mt-1">Law-gically Yours Admin</p>
               </div>
@@ -300,7 +300,7 @@ export default function JudgementEditor() {
             {/* Title */}
             <div className="mb-6">
               <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
-                Judgement Title *
+                Landmark Judgement Title *
               </label>
               <input
                 type="text"
@@ -446,7 +446,7 @@ export default function JudgementEditor() {
             {/* PDF */}
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Judgement PDF Document
+                Landmark Judgement PDF Document
               </label>
               <input
                 type="file"
@@ -532,7 +532,7 @@ export default function JudgementEditor() {
               disabled={loading || uploading}
               className="flex-1 bg-navy text-white font-semibold py-3.5 rounded-xl hover:bg-navy-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-elegant"
             >
-              {loading ? 'Saving...' : (id ? 'Update Judgement' : 'Upload Judgement')}
+              {loading ? 'Saving...' : (id ? 'Update Landmark Judgement' : 'Upload Landmark Judgement')}
             </button>
             <button
               type="button"

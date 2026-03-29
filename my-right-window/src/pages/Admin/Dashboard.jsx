@@ -394,7 +394,7 @@ export default function AdminDashboard() {
                 <FaGavel className="w-5 h-5 text-amber-600" />
               </div>
               <div>
-                <h3 className="text-gray-500 text-xs font-medium">Judgements</h3>
+                <h3 className="text-gray-500 text-xs font-medium">Landmark Judgements</h3>
                 <p className="text-2xl font-bold text-amber-600">{judgements.length}</p>
               </div>
             </div>
@@ -452,7 +452,7 @@ export default function AdminDashboard() {
             onClick={() => setActiveTab('judgements')}
             className={`px-5 py-2.5 rounded-xl font-medium transition-colors flex items-center gap-2 ${activeTab === 'judgements' ? 'bg-navy text-white shadow-elegant' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'}`}
           >
-            <FaGavel className="w-4 h-4" /> Judgements
+            <FaGavel className="w-4 h-4" /> Landmark Judgements
           </button>
           <button
             onClick={() => setActiveTab('ticker')}
@@ -538,7 +538,7 @@ export default function AdminDashboard() {
             <div className="mb-6">
               <button onClick={() => navigate('/admin/judgement-editor')} className="px-6 py-3 bg-gold text-white font-semibold rounded-xl hover:bg-gold-dark transition-colors shadow-elegant flex items-center gap-2">
                 <FaGavel className="w-5 h-5" />
-                Upload New Judgement
+                Upload New Landmark Judgement
               </button>
             </div>
 
@@ -560,8 +560,8 @@ export default function AdminDashboard() {
                       <tr><td colSpan="6" className="px-6 py-16 text-center">
                         <div className="flex flex-col items-center">
                           <FaGavel className="w-8 h-8 text-gray-300 mb-4" />
-                          <p className="text-gray-500 mb-2">No judgements yet</p>
-                          <p className="text-gray-400 text-sm">Upload your first court judgement to get started!</p>
+                          <p className="text-gray-500 mb-2">No landmark judgements yet</p>
+                          <p className="text-gray-400 text-sm">Upload your first landmark judgement to get started!</p>
                         </div>
                       </td></tr>
                     ) : (
@@ -709,7 +709,7 @@ export default function AdminDashboard() {
             <div className="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4">
               <FaGavel className="w-6 h-6 text-red-600" />
             </div>
-            <h3 className="text-xl font-serif font-bold text-gray-900 mb-2 text-center">Delete Judgement</h3>
+            <h3 className="text-xl font-serif font-bold text-gray-900 mb-2 text-center">Delete Landmark Judgement</h3>
             <p className="text-gray-500 mb-6 text-center">Are you sure you want to delete &quot;{judgementToDelete?.title}&quot;? This action cannot be undone.</p>
             <div className="flex justify-center gap-4">
               <button onClick={() => { setShowJudgementDeleteModal(false); setJudgementToDelete(null); }} className="px-5 py-2.5 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors font-medium">Cancel</button>

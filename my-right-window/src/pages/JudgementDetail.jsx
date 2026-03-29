@@ -65,10 +65,10 @@ const JudgementDetail = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
-          <h3 className="text-xl font-serif font-bold text-gray-900 mb-2">Judgement Not Found</h3>
-          <p className="text-gray-500 mb-6">{error || 'The requested judgement could not be found.'}</p>
+          <h3 className="text-xl font-serif font-bold text-gray-900 mb-2">Landmark Judgement Not Found</h3>
+          <p className="text-gray-500 mb-6">{error || 'The requested landmark judgement could not be found.'}</p>
           <Link to="/judgements" className="btn-primary">
-            Back to Judgements
+            Back to Landmark Judgements
           </Link>
         </div>
       </div>
@@ -87,7 +87,7 @@ const JudgementDetail = () => {
             className="inline-flex items-center gap-2 text-gray-500 hover:text-navy transition-colors font-medium"
           >
             <FaArrowLeft className="w-4 h-4" />
-            Back to Judgements
+            Back to Landmark Judgements
           </Link>
         </div>
 
@@ -106,7 +106,7 @@ const JudgementDetail = () => {
                 <div className="absolute bottom-6 left-6 right-6">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-navy/80 text-white text-xs font-medium rounded-full backdrop-blur-sm mb-3">
                     <FaGavel className="w-3 h-3" />
-                    Court Judgement
+                    Landmark Judgement
                   </span>
                 </div>
               </div>
@@ -190,7 +190,7 @@ const JudgementDetail = () => {
                 <svg className="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
                 </svg>
-                {judgement.pdf_name || 'Judgement Document'}
+                {judgement.pdf_name || 'Landmark Judgement Document'}
               </h3>
               <PDFViewer url={judgement.pdf_url} />
             </div>
@@ -206,7 +206,7 @@ const JudgementDetail = () => {
 
           {/* Share */}
           <div className="bg-white border border-gray-200 rounded-2xl shadow-card p-6 mb-8">
-            <h3 className="text-lg font-serif font-bold text-gray-900 mb-4">Share this Judgement</h3>
+            <h3 className="text-lg font-serif font-bold text-gray-900 mb-4">Share this Landmark Judgement</h3>
             <ShareButtons title={judgement.title} />
           </div>
         </article>
