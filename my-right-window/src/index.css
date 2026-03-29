@@ -394,8 +394,8 @@
 
 /* =========== NEWS TICKER =========== */
 @keyframes tickerScroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
 }
 
 .news-ticker-container {
@@ -438,8 +438,11 @@
   display: flex;
   align-items: center;
   white-space: nowrap;
-  animation: tickerScroll 30s linear infinite;
+  animation: tickerScroll 18s linear infinite;
   will-change: transform;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .news-ticker-container:hover .news-ticker-content {
@@ -496,7 +499,7 @@
     margin: 0 8px;
   }
   .news-ticker-content {
-    animation-duration: 20s;
+    animation-duration: 12s;
   }
 }
 
