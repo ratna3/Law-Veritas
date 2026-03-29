@@ -173,19 +173,19 @@ export default function JudgementEditor() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.title.trim()) return alert('Please enter a Landmark Judgement Title.');
+    if (!(formData.title || '').trim()) return alert('Please enter a Landmark Judgement Title.');
     if (!formData.court) return alert('Please select a Court.');
-    if (!formData.author.trim()) return alert('Please enter the Uploaded By name.');
+    if (!(formData.author || '').trim()) return alert('Please enter the Uploaded By name.');
     
     // Check if content/summary is essentially empty (no text content)
-    const cleanContent = formData.content.replace(/<[^>]*>?/gm, '').trim();
+    const cleanContent = (formData.content || '').replace(/<[^>]*>?/gm, '').trim();
     if (!cleanContent) return alert('Please enter the Content / Summary.');
 
     setLoading(true);
 
     try {
       // Generate slug
-      let slug = formData.title
+      let slug = (formData.title || '')
         .trim()
         .toLowerCase()
         .replace(/[\s_]+/g, '-')
