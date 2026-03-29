@@ -3,6 +3,7 @@ import { useBlogStore } from '../store';
 import BlogCard from '../components/blog/BlogCard';
 import Pagination from '../components/blog/Pagination';
 import SearchBar from '../components/blog/SearchBar';
+import NewsTicker from '../components/common/NewsTicker';
 
 const NEWS_PER_PAGE = 12;
 
@@ -82,8 +83,11 @@ const NewsList = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white pt-20 md:pt-28 pb-16">
-      <div className="container mx-auto px-4">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white pt-16 md:pt-20 pb-16">
+      {/* News Ticker */}
+      <NewsTicker />
+
+      <div className="container mx-auto px-4 pt-6 md:pt-8">
         {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-gold/5 border border-gold/10 rounded-full mb-6">

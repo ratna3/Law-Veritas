@@ -392,3 +392,111 @@
 .rich-content .ql-indent-4 { padding-left: 12em; }
 .rich-content .ql-indent-5 { padding-left: 15em; }
 
+/* =========== NEWS TICKER =========== */
+@keyframes tickerScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.news-ticker-container {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  background: linear-gradient(135deg, #0d1b2a 0%, #1a365d 100%);
+  overflow: hidden;
+  font-family: 'Playfair Display', Georgia, serif;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 40;
+}
+
+.news-ticker-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: #b8860b;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  text-transform: uppercase;
+}
+
+.news-ticker-track {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.news-ticker-content {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: tickerScroll 30s linear infinite;
+  will-change: transform;
+}
+
+.news-ticker-container:hover .news-ticker-content {
+  animation-play-state: paused;
+}
+
+.news-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 8px;
+  font-size: 0.875rem;
+  line-height: 1;
+}
+
+.news-ticker-link {
+  color: #f8fafc;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.news-ticker-link:hover {
+  color: #d4a843;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.news-ticker-text {
+  color: #f8fafc;
+}
+
+.news-ticker-separator {
+  color: #b8860b;
+  margin: 0 12px;
+  font-size: 0.75rem;
+}
+
+/* Responsive ticker */
+@media (max-width: 640px) {
+  .news-ticker-label {
+    padding: 8px 10px;
+    font-size: 0.65rem;
+    gap: 4px;
+  }
+  .news-ticker-label svg {
+    width: 12px;
+    height: 12px;
+  }
+  .news-ticker-item {
+    font-size: 0.8rem;
+    padding: 0 6px;
+  }
+  .news-ticker-separator {
+    margin: 0 8px;
+  }
+  .news-ticker-content {
+    animation-duration: 20s;
+  }
+}
+

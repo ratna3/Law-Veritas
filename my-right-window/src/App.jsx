@@ -17,6 +17,9 @@ const AdminLogin = lazy(() => import('./pages/Admin/Login'));
 const AdminDashboard = lazy(() => import('./pages/Admin/Dashboard'));
 const BlogEditor = lazy(() => import('./pages/Admin/BlogEditor'));
 const NewsList = lazy(() => import('./pages/NewsList'));
+const JudgementList = lazy(() => import('./pages/JudgementList'));
+const JudgementDetail = lazy(() => import('./pages/JudgementDetail'));
+const JudgementEditor = lazy(() => import('./pages/Admin/JudgementEditor'));
 
 function App() {
   const { initialize } = useAuthStore();
@@ -43,6 +46,8 @@ function App() {
             <Route path="/about" element={<><Navbar /><About /></>} />
             <Route path="/bareacts" element={<><Navbar /><Bareacts /></>} />
             <Route path="/news" element={<><Navbar /><NewsList /></>} />
+            <Route path="/judgements" element={<><Navbar /><JudgementList /></>} />
+            <Route path="/judgement/:slug" element={<><Navbar /><JudgementDetail /></>} />
 
             {/* Admin Routes */}
             <Route path="/admin/login" element={<AdminLogin />} />
@@ -59,6 +64,16 @@ function App() {
             <Route path="/admin/editor/:id" element={
               <ProtectedRoute>
                 <BlogEditor />
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/judgement-editor" element={
+              <ProtectedRoute>
+                <JudgementEditor />
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/judgement-editor/:id" element={
+              <ProtectedRoute>
+                <JudgementEditor />
               </ProtectedRoute>
             } />
           </Routes>
