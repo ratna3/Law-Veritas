@@ -1,10 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import BlogCard from '../components/blog/BlogCard';
+import NewsTicker from '../components/common/NewsTicker';
 import { ScaleIcon, GavelIcon, FileTextIcon, UsersIcon } from '../components/Icons';
 import { useBlogStore } from '../store';
+import { supabase } from '../services/supabase';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
-import { FaBalanceScale, FaGavel, FaBookOpen, FaShieldAlt, FaHandshake, FaLandmark, FaArrowRight, FaLinkedinIn, FaInstagram } from 'react-icons/fa';
+import { FaBalanceScale, FaGavel, FaBookOpen, FaShieldAlt, FaHandshake, FaLandmark, FaArrowRight, FaLinkedinIn, FaInstagram, FaNewspaper } from 'react-icons/fa';
 
 const services = [
   { Icon: ScaleIcon, title: 'Corporate Law', desc: 'Expert guidance for businesses navigating complex regulatory landscapes' },
@@ -15,14 +17,92 @@ const services = [
 
 const Home = () => {
   const { featuredBlogs, fetchFeaturedBlogs } = useBlogStore();
+  const [featuredNews, setFeaturedNews] = useState([]);
+  const [featuredJudgements, setFeaturedJudgements] = useState([]);
   const [servicesRef, servicesVisible] = useIntersectionObserver({ threshold: 0.1 });
   const [bareActsRef, bareActsVisible] = useIntersectionObserver({ threshold: 0.15 });
   const [blogsRef, blogsVisible] = useIntersectionObserver({ threshold: 0.1 });
+  const [newsRef, newsVisible] = useIntersectionObserver({ threshold: 0.1 });
+  const [judgementsRef, judgementsVisible] = useIntersectionObserver({ threshold: 0.1 });
   const [aboutRef, aboutVisible] = useIntersectionObserver({ threshold: 0.15 });
+
+  // Fetch featured news articles
+  const fetchFeaturedNews = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from('blogs')
+        .select('*')
+        .eq('published', true)
+        .eq('featured', true)
+        .eq('type', 'news')
+        .order('created_at', { ascending: false })
+        .limit(6);
+      if (error) throw error;
+      setFeaturedNews(data || []);
+    } catch (err) {
+      console.warn('Featured news fetch error:', err.message);
+    }
+  }, []);
+
+  // Fetch featured judgements
+  const fetchFeaturedJudgements = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from('judgements')
+        .select('*')
+        .eq('published', true)
+        .eq('featured', true)
+        .order('created_at', { ascending: false })
+        .limit(6);
+      if (error) throw error;
+      setFeaturedJudgements(data || []);
+    } catch (err) {
+      console.warn('Featured judgements fetch error:', err.message);
+    }
+  }, []);
 
   useEffect(() => {
     fetchFeaturedBlogs();
-  }, [fetchFeaturedBlogs]);
+    fetchFeaturedNews();
+    fetchFeaturedJudgements();
+
+    // Real-time subscription: re-fetch when admin toggles featured on blogs/news
+    const blogsChannel = supabase
+      .channel('home-blogs-realtime')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'blogs' },
+        () => {
+          fetchFeaturedBlogs();
+          fetchFeaturedNews();
+        }
+      )
+      .subscribe();
+
+    // Real-time subscription: re-fetch when admin toggles featured on judgements
+    const judgementsChannel = supabase
+      .channel('home-judgements-realtime')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'judgements' },
+        () => {
+          fetchFeaturedJudgements();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      blogsChannel.unsubscribe();
+      judgementsChannel.unsubscribe();
+    };
+  }, [fetchFeaturedBlogs, fetchFeaturedNews, fetchFeaturedJudgements]);
+
+  const formatDate = (dateString) => {
+    if (!dateString) return '';
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric', month: 'short', day: 'numeric',
+    });
+  };
 
   return (
     <div className="bg-white">
@@ -136,6 +216,11 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* ═══════════════════════════════════════════════════════
+          BREAKING NEWS TICKER — Home page only
+          ═══════════════════════════════════════════════════════ */}
+      <NewsTicker />
 
       {/* ═══════════════════════════════════════════
           PRACTICE AREAS — 4-col with SVG Icons
@@ -292,6 +377,169 @@ const Home = () => {
       <div className="max-w-7xl mx-auto px-4">
         <hr className="border-0 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
       </div>
+
+      {/* ═══════════════════════════════════════════════════
+          FEATURED NEWS — (3-col grid)
+          ═══════════════════════════════════════════════════ */}
+      {featuredNews.length > 0 && (
+        <section
+          ref={newsRef}
+          className={`py-16 md:py-24 px-4 bg-slate-50 transition-all duration-700 ease-out ${newsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+        >
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 border border-blue-100 rounded-full mb-6">
+                <FaNewspaper className="w-3 h-3 text-blue-600" />
+                <span className="text-sm font-medium text-blue-700">Breaking & Latest</span>
+              </div>
+              <h2 className="section-title">Featured News</h2>
+              <div className="divider-gold"></div>
+              <p className="section-subtitle">
+                The latest legal updates and news you need to know
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {featuredNews.map((news) => (
+                <BlogCard key={news.id} blog={news} />
+              ))}
+            </div>
+
+            <div className="text-center mt-12">
+              <Link to="/news" className="btn-secondary inline-flex items-center group">
+                View All News
+                <FaArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {featuredNews.length > 0 && (
+        <div className="max-w-7xl mx-auto px-4">
+          <hr className="border-0 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
+        </div>
+      )}
+
+      {/* ═══════════════════════════════════════════════════
+          FEATURED JUDGEMENTS — (Grid)
+          ═══════════════════════════════════════════════════ */}
+      {featuredJudgements.length > 0 && (
+        <section
+          ref={judgementsRef}
+          className={`py-16 md:py-24 px-4 bg-white transition-all duration-700 ease-out ${judgementsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+        >
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-amber-50 border border-amber-100 rounded-full mb-6">
+                <FaGavel className="w-3 h-3 text-amber-600" />
+                <span className="text-sm font-medium text-amber-700">Landmark Cases</span>
+              </div>
+              <h2 className="section-title">Featured Judgements</h2>
+              <div className="divider-gold"></div>
+              <p className="section-subtitle">
+                Key judicial decisions that shape the legal landscape
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {featuredJudgements.map((judgement) => (
+                <article key={judgement.id} className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 group">
+                    {/* Thumbnail */}
+                    {judgement.thumbnail_url ? (
+                      <div className="relative h-52 overflow-hidden">
+                        <img
+                          src={judgement.thumbnail_url}
+                          alt={judgement.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent to-transparent" />
+                        <div className="absolute top-3 left-3">
+                          <span className="px-3 py-1 bg-navy/90 text-white text-xs font-medium rounded-full backdrop-blur-sm">
+                            <FaGavel className="inline w-3 h-3 mr-1" />
+                            Featured Judgement
+                          </span>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="h-52 bg-gradient-to-br from-navy/5 to-gold/5 flex items-center justify-center relative">
+                        <FaBalanceScale className="w-12 h-12 text-navy/20" />
+                        <div className="absolute top-3 left-3">
+                          <span className="px-3 py-1 bg-navy/90 text-white text-xs font-medium rounded-full">
+                            <FaGavel className="inline w-3 h-3 mr-1" />
+                            Featured Judgement
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Content */}
+                    <div className="p-6">
+                      {/* Court & Case Number */}
+                      <div className="flex flex-wrap items-center gap-2 mb-3">
+                        <span className="px-3 py-1 text-xs font-medium text-gold bg-gold/5 rounded-full border border-gold/10">
+                          {judgement.court}
+                        </span>
+                        {judgement.case_number && (
+                          <span className="px-3 py-1 text-xs font-medium text-navy bg-navy/5 rounded-full">
+                            {judgement.case_number}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Title */}
+                      <h3 className="text-xl font-serif font-bold text-gray-900 mb-3 group-hover:text-navy transition-colors line-clamp-2">
+                        <Link to={`/judgement/${judgement.slug}`} className="hover:underline decoration-gold underline-offset-4">
+                          {judgement.title}
+                        </Link>
+                      </h3>
+
+                      {/* Meta */}
+                      <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                        <span className="flex items-center gap-1.5">
+                          <svg className="w-4 h-4 text-navy/50" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                          </svg>
+                          {judgement.author}
+                        </span>
+                        {judgement.judgement_date && (
+                          <span className="flex items-center gap-1.5">
+                            <svg className="w-4 h-4 text-gold/70" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+                            </svg>
+                            {formatDate(judgement.judgement_date)}
+                          </span>
+                        )}
+                      </div>
+                      <Link
+                        to={`/judgement/${judgement.slug}`}
+                        className="inline-flex items-center gap-2 text-navy font-semibold hover:text-gold transition-colors group/link"
+                      >
+                        Read Landmark Judgement
+                        <svg className="w-4 h-4 transition-transform group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </Link>
+                    </div>
+                  </article>
+              ))}
+            </div>
+
+            <div className="text-center mt-12">
+              <Link to="/judgements" className="btn-secondary inline-flex items-center group">
+                View All Judgements
+                <FaArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {featuredJudgements.length > 0 && (
+        <div className="max-w-7xl mx-auto px-4">
+          <hr className="border-0 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
+        </div>
+      )}
 
       {/* ═══════════════════════════════════════════════════════════
           ABOUT SECTION — Text + values (left) + Pillars of justice (right)
