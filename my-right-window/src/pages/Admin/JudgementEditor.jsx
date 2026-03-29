@@ -180,8 +180,6 @@ export default function JudgementEditor() {
     // Check if content/summary is essentially empty (no text content)
     const cleanContent = formData.content.replace(/<[^>]*>?/gm, '').trim();
     if (!cleanContent) return alert('Please enter the Content / Summary.');
-    
-    if (!pdf) return alert('Please upload the Landmark Judgement PDF Document.');
 
     setLoading(true);
 

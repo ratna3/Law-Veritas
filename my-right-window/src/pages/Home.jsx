@@ -1,7 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import BlogCard from '../components/blog/BlogCard';
-import NewsTicker from '../components/common/NewsTicker';
 import { ScaleIcon, GavelIcon, FileTextIcon, UsersIcon } from '../components/Icons';
 import { useBlogStore } from '../store';
 import { supabase } from '../services/supabase';
@@ -106,11 +105,6 @@ const Home = () => {
 
   return (
     <div className="bg-white">
-      {/* ═══════════════════════════════════════════════════════
-          BREAKING NEWS TICKER — Home page only (Below Navbar)
-          ═══════════════════════════════════════════════════════ */}
-      <NewsTicker />
-
       {/* ═══════════════════════════════════════════════════════
           HERO SECTION — Elegant split layout
           ═══════════════════════════════════════════════════════ */}

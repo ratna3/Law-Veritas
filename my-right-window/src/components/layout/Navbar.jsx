@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import UserAuthButton from '../common/UserAuthButton';
+import NewsTicker from '../common/NewsTicker';
 import { FaBalanceScale, FaBars, FaTimes } from 'react-icons/fa';
 
 export default function Navbar() {
@@ -113,6 +114,9 @@ export default function Navbar() {
           </div>
         </div>
       )}
+
+      {/* Breaking News Ticker — Home page only */}
+      {location.pathname === '/' && <NewsTicker />}
     </nav>
   );
 }
