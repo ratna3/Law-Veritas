@@ -4,7 +4,6 @@ import BlogCard from '../components/blog/BlogCard';
 import { ScaleIcon, GavelIcon, FileTextIcon, UsersIcon } from '../components/Icons';
 import { useBlogStore } from '../store';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
-import NewsTicker from '../components/common/NewsTicker';
 import { FaBalanceScale, FaGavel, FaBookOpen, FaShieldAlt, FaHandshake, FaLandmark, FaArrowRight, FaLinkedinIn, FaInstagram } from 'react-icons/fa';
 
 const services = [
@@ -137,11 +136,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* ═══════════════════════════════════════════════════════
-          BREAKING NEWS TICKER
-          ═══════════════════════════════════════════════════════ */}
-      <NewsTicker />
 
       {/* ═══════════════════════════════════════════
           PRACTICE AREAS — 4-col with SVG Icons

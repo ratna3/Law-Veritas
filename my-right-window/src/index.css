@@ -394,7 +394,7 @@
 
 /* =========== NEWS TICKER =========== */
 @keyframes tickerScroll {
-  0% { transform: translateX(100%); }
+  0% { transform: translateX(0); }
   100% { transform: translateX(-100%); }
 }
 
@@ -407,7 +407,6 @@
   font-family: 'Playfair Display', Georgia, serif;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   position: relative;
-  z-index: 40;
 }
 
 .news-ticker-label {
@@ -435,9 +434,11 @@
 }
 
 .news-ticker-content {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   white-space: nowrap;
+  position: relative;
+  left: 100%;
   animation: tickerScroll 18s linear infinite;
   will-change: transform;
   transform: translateZ(0);
@@ -502,4 +503,5 @@
     animation-duration: 12s;
   }
 }
+
 
