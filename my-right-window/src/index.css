@@ -393,9 +393,14 @@
 .rich-content .ql-indent-5 { padding-left: 15em; }
 
 /* =========== NEWS TICKER =========== */
+
+/* Animation driven by JS-computed custom properties:
+   --ticker-start : track width (px)  — enter from extreme right
+   --ticker-end   : -content width (px) — exit completely off the left
+   --ticker-duration : computed from total distance / speed */
 @keyframes tickerScroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
+  0%   { transform: translate3d(var(--ticker-start, 100vw), 0, 0); }
+  100% { transform: translate3d(var(--ticker-end, -100%), 0, 0); }
 }
 
 .news-ticker-container {
@@ -437,11 +442,8 @@
   display: inline-flex;
   align-items: center;
   white-space: nowrap;
-  position: relative;
-  left: 100%;
-  animation: tickerScroll 18s linear infinite;
+  animation: tickerScroll var(--ticker-duration, 20s) linear infinite;
   will-change: transform;
-  transform: translateZ(0);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
@@ -453,7 +455,7 @@
 .news-ticker-item {
   display: inline-flex;
   align-items: center;
-  padding: 0 8px;
+  padding: 0 10px;
   font-size: 0.875rem;
   line-height: 1;
 }
@@ -477,7 +479,7 @@
 
 .news-ticker-separator {
   color: #b8860b;
-  margin: 0 12px;
+  margin: 0 14px;
   font-size: 0.75rem;
 }
 
@@ -498,9 +500,6 @@
   }
   .news-ticker-separator {
     margin: 0 8px;
-  }
-  .news-ticker-content {
-    animation-duration: 12s;
   }
 }
 
