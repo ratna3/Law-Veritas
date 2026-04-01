@@ -168,6 +168,8 @@
 /* Markdown Content Styling */
 .markdown-content {
   @apply text-gray-700 leading-relaxed text-lg;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 .markdown-content h1 {
@@ -253,8 +255,9 @@
 /* Rich Content (Quill HTML) Styling */
 .rich-content {
   @apply text-gray-700 leading-relaxed text-lg;
-  word-wrap: break-word;
+  word-break: normal;
   overflow-wrap: break-word;
+  word-spacing: normal;
 }
 
 .rich-content h1 {
@@ -369,7 +372,7 @@
 .rich-content .ql-size-48px { font-size: 48px; }
 .rich-content .ql-size-64px { font-size: 64px; }
 
-/* Quill font families in rendered output */
+/* Quill font families in rendered output — System / Web-safe */
 .rich-content .ql-font-arial { font-family: Arial, sans-serif; }
 .rich-content .ql-font-georgia { font-family: Georgia, serif; }
 .rich-content .ql-font-times-new-roman { font-family: 'Times New Roman', serif; }
@@ -379,6 +382,24 @@
 .rich-content .ql-font-tahoma { font-family: Tahoma, sans-serif; }
 .rich-content .ql-font-impact { font-family: Impact, sans-serif; }
 .rich-content .ql-font-comic-sans-ms { font-family: 'Comic Sans MS', cursive; }
+
+/* Quill font families in rendered output — Google Web Fonts */
+.rich-content .ql-font-roboto { font-family: 'Roboto', sans-serif; }
+.rich-content .ql-font-open-sans { font-family: 'Open Sans', sans-serif; }
+.rich-content .ql-font-lato { font-family: 'Lato', sans-serif; }
+.rich-content .ql-font-montserrat { font-family: 'Montserrat', sans-serif; }
+.rich-content .ql-font-poppins { font-family: 'Poppins', sans-serif; }
+.rich-content .ql-font-raleway { font-family: 'Raleway', sans-serif; }
+.rich-content .ql-font-merriweather { font-family: 'Merriweather', serif; }
+.rich-content .ql-font-nunito { font-family: 'Nunito', sans-serif; }
+.rich-content .ql-font-lora { font-family: 'Lora', serif; }
+.rich-content .ql-font-source-serif-pro { font-family: 'Source Serif Pro', serif; }
+.rich-content .ql-font-playfair-display { font-family: 'Playfair Display', serif; }
+.rich-content .ql-font-pt-serif { font-family: 'PT Serif', serif; }
+.rich-content .ql-font-crimson-text { font-family: 'Crimson Text', serif; }
+.rich-content .ql-font-libre-baskerville { font-family: 'Libre Baskerville', serif; }
+.rich-content .ql-font-eb-garamond { font-family: 'EB Garamond', serif; }
+.rich-content .ql-font-inter { font-family: 'Inter', sans-serif; }
 
 /* Quill text alignment */
 .rich-content .ql-align-center { text-align: center; }

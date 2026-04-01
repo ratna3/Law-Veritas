@@ -2,9 +2,10 @@ import { useMemo } from 'react';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 
-// Font whitelist
+// Font whitelist — system + Google Web Fonts
 const Font = ReactQuill.Quill.import('formats/font');
 Font.whitelist = [
+  // System / Web-safe fonts
   'arial',
   'georgia',
   'times-new-roman',
@@ -14,6 +15,23 @@ Font.whitelist = [
   'tahoma',
   'impact',
   'comic-sans-ms',
+  // Google Web Fonts
+  'roboto',
+  'open-sans',
+  'lato',
+  'montserrat',
+  'poppins',
+  'raleway',
+  'merriweather',
+  'nunito',
+  'lora',
+  'source-serif-pro',
+  'playfair-display',
+  'pt-serif',
+  'crimson-text',
+  'libre-baskerville',
+  'eb-garamond',
+  'inter',
 ];
 ReactQuill.Quill.register(Font, true);
 
@@ -23,6 +41,13 @@ Size.whitelist = ['10px', '12px', '14px', '16px', '18px', '20px', '24px', '28px'
 ReactQuill.Quill.register(Size, true);
 
 export default function RichTextEditor({ value, onChange }) {
+  // Sanitize Quill output: replace &nbsp; with regular spaces to prevent
+  // mid-word line breaks on the published page
+  const handleChange = (html) => {
+    const sanitized = html ? html.replace(/&nbsp;/g, ' ') : html;
+    onChange(sanitized);
+  };
+
   const modules = useMemo(() => ({
     toolbar: {
       container: [
@@ -78,7 +103,7 @@ export default function RichTextEditor({ value, onChange }) {
       <ReactQuill
         theme="snow"
         value={value}
-        onChange={onChange}
+        onChange={handleChange}
         modules={modules}
         formats={formats}
         placeholder="Write your article content here..."
@@ -112,7 +137,7 @@ export default function RichTextEditor({ value, onChange }) {
           font-style: normal;
         }
         .rich-editor-wrapper .ql-snow .ql-picker.ql-font {
-          width: 160px;
+          width: 180px;
         }
         .rich-editor-wrapper .ql-snow .ql-picker.ql-size {
           width: 80px;
@@ -121,11 +146,12 @@ export default function RichTextEditor({ value, onChange }) {
           width: 120px;
         }
 
-        /* Font family labels */
+        /* ========== Font family labels ========== */
         .ql-snow .ql-picker.ql-font .ql-picker-label::before,
         .ql-snow .ql-picker.ql-font .ql-picker-item::before {
           content: 'Default';
         }
+        /* System / Web-safe */
         .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="arial"]::before,
         .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="arial"]::before {
           content: 'Arial'; font-family: Arial, sans-serif;
@@ -162,8 +188,74 @@ export default function RichTextEditor({ value, onChange }) {
         .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="comic-sans-ms"]::before {
           content: 'Comic Sans'; font-family: 'Comic Sans MS', cursive;
         }
+        /* Google Web Fonts */
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="roboto"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="roboto"]::before {
+          content: 'Roboto'; font-family: 'Roboto', sans-serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="open-sans"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="open-sans"]::before {
+          content: 'Open Sans'; font-family: 'Open Sans', sans-serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="lato"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="lato"]::before {
+          content: 'Lato'; font-family: 'Lato', sans-serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="montserrat"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="montserrat"]::before {
+          content: 'Montserrat'; font-family: 'Montserrat', sans-serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="poppins"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="poppins"]::before {
+          content: 'Poppins'; font-family: 'Poppins', sans-serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="raleway"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="raleway"]::before {
+          content: 'Raleway'; font-family: 'Raleway', sans-serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="merriweather"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="merriweather"]::before {
+          content: 'Merriweather'; font-family: 'Merriweather', serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="nunito"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="nunito"]::before {
+          content: 'Nunito'; font-family: 'Nunito', sans-serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="lora"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="lora"]::before {
+          content: 'Lora'; font-family: 'Lora', serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="source-serif-pro"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="source-serif-pro"]::before {
+          content: 'Source Serif'; font-family: 'Source Serif Pro', serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="playfair-display"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="playfair-display"]::before {
+          content: 'Playfair Display'; font-family: 'Playfair Display', serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="pt-serif"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="pt-serif"]::before {
+          content: 'PT Serif'; font-family: 'PT Serif', serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="crimson-text"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="crimson-text"]::before {
+          content: 'Crimson Text'; font-family: 'Crimson Text', serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="libre-baskerville"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="libre-baskerville"]::before {
+          content: 'Libre Baskerville'; font-family: 'Libre Baskerville', serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="eb-garamond"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="eb-garamond"]::before {
+          content: 'EB Garamond'; font-family: 'EB Garamond', serif;
+        }
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="inter"]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="inter"]::before {
+          content: 'Inter'; font-family: 'Inter', sans-serif;
+        }
 
-        /* Font family rendering in editor */
+        /* ========== Font family rendering in editor ========== */
+        /* System / Web-safe */
         .ql-font-arial { font-family: Arial, sans-serif; }
         .ql-font-georgia { font-family: Georgia, serif; }
         .ql-font-times-new-roman { font-family: 'Times New Roman', serif; }
@@ -173,6 +265,23 @@ export default function RichTextEditor({ value, onChange }) {
         .ql-font-tahoma { font-family: Tahoma, sans-serif; }
         .ql-font-impact { font-family: Impact, sans-serif; }
         .ql-font-comic-sans-ms { font-family: 'Comic Sans MS', cursive; }
+        /* Google Web Fonts */
+        .ql-font-roboto { font-family: 'Roboto', sans-serif; }
+        .ql-font-open-sans { font-family: 'Open Sans', sans-serif; }
+        .ql-font-lato { font-family: 'Lato', sans-serif; }
+        .ql-font-montserrat { font-family: 'Montserrat', sans-serif; }
+        .ql-font-poppins { font-family: 'Poppins', sans-serif; }
+        .ql-font-raleway { font-family: 'Raleway', sans-serif; }
+        .ql-font-merriweather { font-family: 'Merriweather', serif; }
+        .ql-font-nunito { font-family: 'Nunito', sans-serif; }
+        .ql-font-lora { font-family: 'Lora', serif; }
+        .ql-font-source-serif-pro { font-family: 'Source Serif Pro', serif; }
+        .ql-font-playfair-display { font-family: 'Playfair Display', serif; }
+        .ql-font-pt-serif { font-family: 'PT Serif', serif; }
+        .ql-font-crimson-text { font-family: 'Crimson Text', serif; }
+        .ql-font-libre-baskerville { font-family: 'Libre Baskerville', serif; }
+        .ql-font-eb-garamond { font-family: 'EB Garamond', serif; }
+        .ql-font-inter { font-family: 'Inter', sans-serif; }
 
         /* Size labels */
         .ql-snow .ql-picker.ql-size .ql-picker-label::before,
@@ -239,6 +348,12 @@ export default function RichTextEditor({ value, onChange }) {
         .rich-editor-wrapper .ql-snow.ql-toolbar .ql-picker-label:hover .ql-fill,
         .rich-editor-wrapper .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-fill {
           fill: #1a365d;
+        }
+
+        /* Font dropdown styling — make the dropdown scrollable and well-sized */
+        .rich-editor-wrapper .ql-snow .ql-picker.ql-font .ql-picker-options {
+          max-height: 300px;
+          overflow-y: auto;
         }
       `}</style>
     </div>

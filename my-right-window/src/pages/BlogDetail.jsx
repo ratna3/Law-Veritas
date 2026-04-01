@@ -151,10 +151,13 @@ const BlogDetail = () => {
                 <div
                   className="rich-content"
                   dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(currentBlog.content, {
-                      ADD_TAGS: ['iframe'],
-                      ADD_ATTR: ['allowfullscreen', 'frameborder', 'src', 'class', 'style'],
-                    }),
+                    __html: DOMPurify.sanitize(
+                      currentBlog.content.replace(/&nbsp;/g, ' '),
+                      {
+                        ADD_TAGS: ['iframe'],
+                        ADD_ATTR: ['allowfullscreen', 'frameborder', 'src', 'class', 'style'],
+                      }
+                    ),
                   }}
                 />
               ) : (

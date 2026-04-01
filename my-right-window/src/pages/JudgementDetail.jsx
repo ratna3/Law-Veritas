@@ -173,7 +173,15 @@ const JudgementDetail = () => {
               {isHtml ? (
                 <div
                   className="rich-content"
-                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(judgement.content) }}
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(
+                      judgement.content.replace(/&nbsp;/g, ' '),
+                      {
+                        ADD_TAGS: ['iframe'],
+                        ADD_ATTR: ['allowfullscreen', 'frameborder', 'src', 'class', 'style'],
+                      }
+                    ),
+                  }}
                 />
               ) : (
                 <div className="markdown-content whitespace-pre-wrap">
